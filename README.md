@@ -43,7 +43,12 @@ Then Grant access to this user by running:
 
 <code>GRANT ALL ON \*.\* TO 'team431'@'localhost'; </code><br />
 
-Once you have entered the default MySQL database (ip, username, password, and db), simply run:
+Once you have entered the default MySQL database (ip, username, password, and db), exit, login as the newly created user (team431) and create TheNile database with the following command:
+
+
+<code> Create database TheNile;</code>
+
+Then just simply run the following command to instantiate all tables 
 
 <code> php setup/setup.php </code> on your command line.
 
