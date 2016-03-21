@@ -3,6 +3,10 @@
 class Category extends Entity {
 	public function __construct($args) {
 		parent::__construct($args);
+
+		if(isset($args['parent'])) {
+			$p = new ParentCategory(array("child"=>$this->getID(), "parent"=>$args['parent']));
+		}
 	}
 
 	public static function getAttributeList() {

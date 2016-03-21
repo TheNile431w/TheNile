@@ -44,13 +44,14 @@ class database {
 			$this->open();
 			$close = true;
 		}
-		$ret = $this->handle->real_escape_string($q);
+		$ret = $this->handle->real_escape_string($str);
 		if($close)
 			$this->close();
 		return $ret;
 	}
 
 	public function query($q) {
+		echo($q . "\n");
 		$close = false;
 		if(is_null($this->handle)) {
 			$this->open();

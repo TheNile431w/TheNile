@@ -9,7 +9,7 @@ abstract class Entity {
 	 * __construct($args) : FULL constructor.
 	 * @param [ int | string | array ] $args : integer primary key or single dimensional array of attributes that define the class
 	 */
-	public function __construct($args) {
+	public function __construct($args, $newProv=FALSE) {
 		$info = static::getStaticSQLInfo();
 		$tables = array();
 		$temp = static::getTableName();
@@ -17,20 +17,24 @@ abstract class Entity {
 			array_unshift($tables, $temp);
 			$temp = get_parent_class($temp);
 		}
-		$newProv = FALSE;
+
+		$this->setAttrs($args);
 
 		if(is_null($this->attrs))
 			$this->attrs = array();
 
 		if(is_int($args) OR is_string($args)) {
+			if($newProv)
+				throw new Exception("Cannot instantiate a new " . static::getTableName() . " from anything other than an associative array with attributes as keys and values as values.");
+
 			// LOAD FROM KEY
 			$db = new database();
 			foreach($tables as $t) {
 				$r = $db->query("SELECT * FROM " . $t . " WHERE ". $t::getPrimaryAttr() ."='" . $args . "';");
-				$res = $r->fetchAll();
-				if(count($res) == 1)
-					setAttrs($res[0]);
-				elseif(empty($res))
+				if($r->num_rows == 1) {
+					$res = $r->fetch_assoc();
+					setAttrs($res);
+				} elseif($r->num_rows == 0)
 					throw new Exception("No " . $t . "'s found where " . $t::getPrimaryAttr() . " = " . $args . ".");
 				else
 					throw new Exception("Multiple entries found.");
@@ -38,36 +42,39 @@ abstract class Entity {
 		} else {
 			$allPrims = TRUE;
 			foreach($tables as $t) {
-				$primAttrs = $t::getPrimaryAttr();
-				if(count(explode(",", $primAttrs)) == count($args)) {
-					foreach(explode(", ", $primAttrs) as $a) {
-						if(!isset($args[$a])) {
-							$allPrims = FALSE;
-						}
+				foreach(explode(",", $t::getPrimaryAttr()) as $a) {
+					if(!isset($args[trim($a)])) {
+						$allPrims = FALSE;
 					}
 				}
 			}
 			if($allPrims == TRUE) {
-				$whereClause = array();
-				foreach($args as $a => $v) {
-					$whereClause[] = $a . "='" . $v . "'";
+				foreach($tables as $t) {
+					$whereClause = array();
+					foreach(explode(",", $t::getPrimaryAttr()) as $a) {
+						$a = trim($a);
+						$whereClause[] = $a . "='" . $args[$a] . "'";
+					}
+					$db = new database();
+					$r = $db->query("SELECT * FROM " . $t . " WHERE " . implode(" AND ", $whereClause) . ";");
+					if($r->num_rows == 1) {
+						if($newProv)
+							throw new Exception("A ". $t ." already exists with the same Primary Key values as given for the new entry: " . implode(" AND ", $whereClause));
+						$res = $r->fetch_assoc();
+						$this->setAttrs($res);
+					} elseif($r->num_rows == 0) {
+						$newProv = TRUE;
+						break;
+					} else
+						throw new Exception("Multiple entries found.");
 				}
-				$db = new database();
-				$r = $db->query("SELECT * FROM " . $t . " WHERE " . implode(" AND ", $whereClause) . "';");
-				$res = $r->fetchAll();
-				if(count($res) == 1)
-					setAttrs($res[0]);
-				elseif(empty($res))
-					$newProv = TRUE;
-				else
-					throw new Exception("Multiple entries found.");
 			} else {
 				$newProv = TRUE;
 			}
 		}
 
 		if($newProv) {
-			foreach($table as $t) {
+			foreach($tables as $t) {
 				$tableArgs = array();
 				$db = new database();
 				$db->open();
@@ -76,14 +83,13 @@ abstract class Entity {
 						$tableArgs[$a] = $db->real_escape_string($v);
 					}
 				}
-				$r = $db->query("INSERT INTO " . $t . "(" . implode(',', array_keys($tableArgs)) . ") OUTPUT INSERTED.* VALUES " . implode(',', $whereClause) . "';");
+				$r = $db->query("INSERT INTO " . $t . "(" . implode(',', array_keys($tableArgs)) . ") VALUES (\"" . implode('","', $tableArgs) . "\");");
+				if($r != FALSE AND isset($info[$t][static::getPrimaryAttr()]) AND $this->getID() == FALSE AND strpos(strtoupper($info[$t][static::getPrimaryAttr()]['restrictions']), 'AUTO_INCREMENT') != FALSE) {
+					$r = $db->query("SELECT LAST_INSERT_ID()");
+					$this->setAttrs($r->fetch_assoc());
+				}
 				if(!$r)
-					throw new Exception("Error saving this new provider: " . $r->getError());
-				$res = $r->fetchAll();
-				if(count($res) == 1)
-					setAttrs($res[0]);
-				else
-					throw new Exception("Error saving this new provider: " . $r->getError());
+					throw new Exception("Error saving this new entry.");
 			}
 		}
 	}
@@ -142,7 +148,7 @@ abstract class Entity {
 					$pAttrs[$pAttr] = $this->attrs[static::getTableName()][trim($pAttr)]['val'];
 			}
 
-			if(count($pAttrs[$pAttr]) > 0)
+			if(count($pAttrs) > 0)
 				return $pAttrs;
 			return false;
 		}
@@ -151,7 +157,7 @@ abstract class Entity {
 	public function save() {
 		$query = array();
 		if($this->getID() == false) {
-			// New Provider
+			// New Entry
 			foreach($this->attrs as $table => $t) {
 				$validAttrs = array();
 				foreach($t as $attr => $a) {
@@ -170,7 +176,13 @@ abstract class Entity {
 						$validAttrs[$attr] = $attr . "=" . $this->attrs[$table][$attr]['val'];
 					}
 				}
-				$query[$table] = "UPDATE " . $table . " SET " . implode(",", $validAttrs) . " WHERE " . static::getPrimaryAttr() . "=" . $this->getID() . ";";
+				$id = $this->getID();
+				$whereClause = array();
+				foreach(explode(",", static::getPrimaryAttr()) as $a) {
+					$a = trim($a);
+					$whereClause[] = $a . "=" . $id[$a];
+				}
+				$query[$table] = "UPDATE " . $table . " SET " . implode(",", $validAttrs) . " WHERE " . implode(" AND ", $whereClause) . ";";
 			}
 		}
 
@@ -178,10 +190,76 @@ abstract class Entity {
 		$db->open();
 		foreach($query as $t => $q) {
 			$r = $db->query($q);
-			$r = $r->fetchAll();
+			$r = $r->fetch_assoc();
 			var_dump($r);
 		}
 		$db->close();
+	}
+
+	public function load($args) {
+		$info = static::getStaticSQLInfo();
+		$tables = array();
+		$temp = static::getTableName();
+		while($temp != "Entity") {
+			array_unshift($tables, $temp);
+			$temp = get_parent_class($temp);
+		}
+
+		if(is_int($args) OR is_string($args)) {
+			// LOAD FROM KEY
+			$db = new database();
+			$res = array();
+			foreach($tables as $t) {
+				$r = $db->query("SELECT * FROM " . $t . " WHERE ". $t::getPrimaryAttr() ."='" . $args . "';");
+				if($r->num_rows == 0)
+					return array();
+				else {
+					$tempRes = FALSE;
+					$i = 0;
+					while($tempRes = $r->fetch_assoc()) {
+						if(isset($res[$i]))
+							$res[$i] = array_merge($res[$i], $r->fetch_assoc());
+						else
+							$res[$i] = $r->fetch_assoc();
+						$i++;
+					}
+				}
+			}
+			foreach($res as $i=>$r) {
+				$staticTable = static::getTableName();
+				$res[$i] = new $staticTable($res[$i]);
+			}
+			return $res;
+		} else {
+			$res = array();
+			foreach($tables as $t) {
+				$whereClause = array();
+				foreach($args as $a => $v) {
+					$a = trim($a);
+					if(isset($info[$t][$a]))
+						$whereClause[] = $a . "='" . $v . "'";
+				}
+				$db = new database();
+				$r = $db->query("SELECT * FROM " . $t . " WHERE " . implode(" AND ", $whereClause) . ";");
+				if($r->num_rows == 0) {
+					return array();
+				} else {
+					$tempRes = FALSE;
+					$i = 0;
+					while($tempRes = $r->fetch_assoc()) {
+						if(isset($res[$i]))
+							$res[$i] = array_merge($res[$i], $tempRes);
+						else
+							$res[$i] = $tempRes;
+					}
+				}
+			}
+			foreach($res as $i=>$r) {
+				$staticTable = static::getTableName();
+				$res[$i] = new $staticTable($res[$i]);
+			}
+			return $res;
+		}
 	}
 
 	private function setAttrs($args, $changeVal = NULL) {
@@ -198,6 +276,22 @@ abstract class Entity {
 				elseif(isset($this->attrs[$prev][$a]['change']))
 					unset($this->attrs[$prev][$a]['change']);
 			}
+		}
+	}
+
+	public function set($args) {
+		$this->setAttrs($args, 'edit');
+	}
+
+	public static function getReferences() {
+		$foreignTables = array();
+		foreach(static::getStaticSQLInfo() as $t => $av) {
+			if(isset($av['foreign'])) {
+				$foreignTables[] = explode("(", $av['foreign'])[0];
+			}
+		}
+		foreach($foreignTables as $t) {
+			$foreignTables = array_merge($foreignTables, $t::getReferences());
 		}
 	}
 
