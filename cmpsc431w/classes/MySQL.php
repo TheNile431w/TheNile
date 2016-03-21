@@ -44,7 +44,7 @@ class database {
 			$this->open();
 			$close = true;
 		}
-		$ret = $this->handle->real_escape_string($q);
+		$ret = $this->handle->real_escape_string($str);
 		if($close)
 			$this->close();
 		return $ret;

@@ -19,6 +19,8 @@ abstract class Entity {
 		}
 		$newProv = FALSE;
 
+		$this->setAttrs($args);
+
 		if(is_null($this->attrs))
 			$this->attrs = array();
 
@@ -27,7 +29,7 @@ abstract class Entity {
 			$db = new database();
 			foreach($tables as $t) {
 				$r = $db->query("SELECT * FROM " . $t . " WHERE ". $t::getPrimaryAttr() ."='" . $args . "';");
-				$res = $r->fetchAll();
+				$res = $r->fetch_assoc();
 				if(count($res) == 1)
 					setAttrs($res[0]);
 				elseif(empty($res))
@@ -53,11 +55,11 @@ abstract class Entity {
 					$whereClause[] = $a . "='" . $v . "'";
 				}
 				$db = new database();
-				$r = $db->query("SELECT * FROM " . $t . " WHERE " . implode(" AND ", $whereClause) . "';");
-				$res = $r->fetchAll();
-				if(count($res) == 1)
-					setAttrs($res[0]);
-				elseif(empty($res))
+				$r = $db->query("SELECT * FROM " . $t . " WHERE " . implode(" AND ", $whereClause) . ";");
+				$res = $r->fetch_assoc();
+				if($r->num_rows == 1)
+					$this->setAttrs($res);
+				elseif($r->num_rows == 0)
 					$newProv = TRUE;
 				else
 					throw new Exception("Multiple entries found.");
@@ -67,7 +69,7 @@ abstract class Entity {
 		}
 
 		if($newProv) {
-			foreach($table as $t) {
+			foreach($tables as $t) {
 				$tableArgs = array();
 				$db = new database();
 				$db->open();
@@ -76,14 +78,13 @@ abstract class Entity {
 						$tableArgs[$a] = $db->real_escape_string($v);
 					}
 				}
-				$r = $db->query("INSERT INTO " . $t . "(" . implode(',', array_keys($tableArgs)) . ") OUTPUT INSERTED.* VALUES " . implode(',', $whereClause) . "';");
+				$r = $db->query("INSERT INTO " . $t . "(" . implode(',', array_keys($tableArgs)) . ") VALUES (\"" . implode('","', $tableArgs) . "\");");
+				if($r != FALSE AND isset($info[$t][static::getPrimaryAttr()]) AND $this->getID() == FALSE AND strpos(strtoupper($info[$t][static::getPrimaryAttr()]['restrictions']), 'AUTO_INCREMENT') != FALSE) {
+					$r = $db->query("SELECT LAST_INSERT_ID()");
+					$this->setAttrs($r->fetch_assoc());
+				}
 				if(!$r)
-					throw new Exception("Error saving this new provider: " . $r->getError());
-				$res = $r->fetchAll();
-				if(count($res) == 1)
-					setAttrs($res[0]);
-				else
-					throw new Exception("Error saving this new provider: " . $r->getError());
+					throw new Exception("Error saving this new entry.");
 			}
 		}
 	}
@@ -142,7 +143,7 @@ abstract class Entity {
 					$pAttrs[$pAttr] = $this->attrs[static::getTableName()][trim($pAttr)]['val'];
 			}
 
-			if(count($pAttrs[$pAttr]) > 0)
+			if(count($pAttrs) > 0)
 				return $pAttrs;
 			return false;
 		}
@@ -178,7 +179,7 @@ abstract class Entity {
 		$db->open();
 		foreach($query as $t => $q) {
 			$r = $db->query($q);
-			$r = $r->fetchAll();
+			$r = $r->fetch_assoc();
 			var_dump($r);
 		}
 		$db->close();
