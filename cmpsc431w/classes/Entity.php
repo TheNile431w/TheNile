@@ -20,8 +20,6 @@ abstract class Entity {
 
 		$this->setAttrs($args);
 
-		$this->setAttrs($args);
-
 		if(is_null($this->attrs))
 			$this->attrs = array();
 
@@ -33,17 +31,10 @@ abstract class Entity {
 			$db = new database();
 			foreach($tables as $t) {
 				$r = $db->query("SELECT * FROM " . $t . " WHERE ". $t::getPrimaryAttr() ."='" . $args . "';");
-<<<<<<< HEAD
 				if($r->num_rows == 1) {
 					$res = $r->fetch_assoc();
 					setAttrs($res);
 				} elseif($r->num_rows == 0)
-=======
-				$res = $r->fetch_assoc();
-				if(count($res) == 1)
-					setAttrs($res[0]);
-				elseif(empty($res))
->>>>>>> f1b76cc84180108baa14fd4c464b3b8816171a05
 					throw new Exception("No " . $t . "'s found where " . $t::getPrimaryAttr() . " = " . $args . ".");
 				else
 					throw new Exception("Multiple entries found.");
@@ -77,18 +68,6 @@ abstract class Entity {
 					} else
 						throw new Exception("Multiple entries found.");
 				}
-<<<<<<< HEAD
-=======
-				$db = new database();
-				$r = $db->query("SELECT * FROM " . $t . " WHERE " . implode(" AND ", $whereClause) . ";");
-				$res = $r->fetch_assoc();
-				if($r->num_rows == 1)
-					$this->setAttrs($res);
-				elseif($r->num_rows == 0)
-					$newProv = TRUE;
-				else
-					throw new Exception("Multiple entries found.");
->>>>>>> f1b76cc84180108baa14fd4c464b3b8816171a05
 			} else {
 				$newProv = TRUE;
 			}
