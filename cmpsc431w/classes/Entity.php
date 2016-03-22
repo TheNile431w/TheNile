@@ -9,7 +9,8 @@ abstract class Entity {
 	 * __construct($args) : FULL constructor.
 	 * @param [ int | string | array ] $args : integer primary key or single dimensional array of attributes that define the class
 	 */
-	public function __construct($args, $newProv=FALSE) {
+	public function __construct($ar, $newProv=FALSE) {
+		$args = $ar;
 		$info = static::getStaticSQLInfo();
 		$tables = array();
 		$temp = static::getTableName();
@@ -74,24 +75,46 @@ abstract class Entity {
 		}
 
 		if($newProv) {
-			foreach($tables as $t) {
+			foreach($tables as $i=>$t) {
 				$tableArgs = array();
 				$db = new database();
 				$db->open();
 				foreach($args as $a => $v) {
-					if(isset($info[$t][$a])) {
+					if(isset($t::getStaticSQLInfo()[$t][$a])) {
 						$tableArgs[$a] = $db->real_escape_string($v);
 					}
 				}
-				$r = $db->query("INSERT INTO " . $t . "(" . implode(',', array_keys($tableArgs)) . ") VALUES (\"" . implode('","', $tableArgs) . "\");");
-				if($r != FALSE AND isset($info[$t][static::getPrimaryAttr()]) AND $this->getID() == FALSE AND strpos(strtoupper($info[$t][static::getPrimaryAttr()]['restrictions']), 'AUTO_INCREMENT') != FALSE) {
-					$r = $db->query("SELECT LAST_INSERT_ID()");
-					$this->setAttrs($r->fetch_assoc());
+				if($i != 0 AND !isset($args[static::getPrimaryAttr()])) {
+					$tmp = $db->last_insert_id();
+					$tableArgs[static::getPrimaryAttr()] = $tmp;
 				}
+
+				$r = $db->query("INSERT INTO " . $t . "(" . implode(',', array_keys($tableArgs)) . ") VALUES (\"" . implode('","', $tableArgs) . "\");");
+
+				if(isset($t::getStaticSQLInfo()[$t][$t::getPrimaryAttr()]['restrictions']) AND strtoupper($t::getStaticSQLInfo()[$t][$t::getPrimaryAttr()]['restrictions']) === 'AUTO_INCREMENT') {
+					$r = $db->query("SELECT MAX(".$t::getPrimaryAttr().") AS " . $t::getPrimaryAttr() . " FROM " . $t);
+					if($r->num_rows == 1) {
+						$tmp = $r->fetch_assoc();
+						$this->setAttrs($tmp);
+						$args = array_merge($args, $tmp);
+					}
+				}
+
+
+				/*if($r != FALSE AND isset($t::getStaticSQLInfo()[$t][static::getPrimaryAttr()]) AND strpos(strtoupper($t::getStaticSQLInfo()[$t][static::getPrimaryAttr()]['restrictions']), 'AUTO_INCREMENT') != FALSE) {
+					$r = $db->query("SELECT LAST_INSERT_ID()");
+					$id=$r->fetch_assoc();
+					$this->setAttrs($id);
+					$id=$id[array_keys($id)[0]];
+				}*/
 				if(!$r)
-					throw new Exception("Error saving this new entry.");
+					throw new Exception("Error saving this new entry. " . $db->getError());
 			}
 		}
+	}
+
+	public function test() {
+		return static::getStaticSQLInfo();
 	}
 
 	/**
@@ -139,7 +162,11 @@ abstract class Entity {
 
 	public function getID() {
 		if(count(explode(",", static::getPrimaryAttr())) == 1) {
-			return $this->attrs[static::getTableName()][static::getPrimaryAttr()]['val'];
+			foreach($this->attrs as $t => $tv) {
+				if(isset($tv[static::getPrimaryAttr()]))
+					return $this->attrs[static::getTableName()][static::getPrimaryAttr()]['val'];
+			}
+			return FALSE;
 		} else {
 			$pAttrs = array();
 
@@ -281,6 +308,16 @@ abstract class Entity {
 
 	public function set($args) {
 		$this->setAttrs($args, 'edit');
+	}
+
+	public function get($attr) {
+		foreach($this->attrs as $t => $tv) {
+			if(isset($tv[$attr])) {
+				if(isset($tv[$attr]['val']))
+					return $tv[$attr]['val'];
+			}
+		}
+		return FALSE;
 	}
 
 	public static function getReferences() {

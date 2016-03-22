@@ -1,33 +1,35 @@
 <?php
 
-// Will put this on a separate configuration file but for now and testing purposes it will be here.
+include("cmpsc431w/Header.php");
 
-/**
- * include("Header.php");
- * $arr = array("name"=>$_POST['name'], ...);
- * $u = new User($arr);
- * 
- */
+$p = new Person(array(
+	"username" => "testuser",
+	"name" => "John Doe",
+	"email" => "scott.enand@gmail.com",
+	"password" => "password",
+	"income" => "2000",
+	"gender" => "Male",
+	"bday" => "1993/01/01"));
 
-$name = addslashes($_POST["name"]);
-$email = $_POST["email"];
-$username = $_POST["username"];
-$password = $_POST["password"];
-$income = $_POST["income"];
+// print_r(Person::getAttributeList());
+
+$c = new Category(array(
+	"name" => "All",
+	"description" => "All Products"));
+
+$cc = new Category(array(
+	"name" => "n",
+	"description" => "d",
+	"parent" => "All"));
+
+$p = new Purchase(Purchase::scrape("http://www.amazon.com/gp/product/B000WUPKGM?keywords=pharaoh&qid=1458594770&ref_=sr_1_5&sr=8-5", "testuser"));
+
+// $a = new Auction(Auction::scrape("URL", "PERSON.username", description = NULL));
+
+new PartOf(array(
+	"category" => "all",
+	"pid" => $p->get("pid")));
 
 
-// Create connection
-$conn = new database();
-$conn->open()
 
-$sql = "INSERT INTO User (name, email, username,password,income)
-VALUES ('".$name."','".$email."','".$username."','".$password."','".$income."')";
-
-if ($conn->query($sql)) {
-    echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->getError();
-}
-$conn->close()
-
- ?>
+?>

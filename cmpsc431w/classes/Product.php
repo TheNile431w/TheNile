@@ -50,6 +50,34 @@ class Product extends Entity {
 	protected static function getPrimaryAttr() {
 		return "pid";
 	}
+
+	public static function scrape($url, $person, $description = NULL) {
+		$dom = file_get_html($url);
+
+		$arr['pname'] = $dom->find("span[id=productTitle]", 0)->innerText() . "\n";
+		$img = $dom->find("img[id=landingImage]", 0)->src;
+		$temp = pathinfo($img)['basename'];
+
+		$old_path = getcwd();
+		chdir("../../images");
+		$output = shell_exec('curl -O ' . $url);
+		chdir($old_path);
+		
+		$arr['img'] = $temp;
+		$arr['location'] = "State College";
+		if(is_null($description)) {
+			$arr['description'] = trim($dom->find("div[id=productDescription] p", 0)->innerText());
+		} else {
+			$arr['description'] = $description;
+		}
+		$tmp = $dom->find("span[id=priceblock_ourprice]", 0)->innerText();
+		echo($tmp);
+		$arr['buy_out'] = trim(explode("-", $tmp)[0], " \t\n\r\0\x0B\$");
+		echo($arr['buy_out']);
+		$arr['sold_by'] = $person;
+
+		return $arr;
+	}
 }
 
 include("Purchase.php");

@@ -1,7 +1,5 @@
 <?php
 
-include("Dependencies/simplehtmldom_1_5/simple_html_dom.php");
-
 $CLASSES = array(
 "Entity" => array(
 	"User" => array(
@@ -27,7 +25,7 @@ $CLASSES = array(
 ));
 
 // INCLUDE ABOVE CLASSES : up to 3 levels deep
-define("FOLDER", "cmpsc431w/classes/");
+define("FOLDER", "classes/");
 foreach($CLASSES as $i => $c) {
 	if(is_array($c)) {
 		require_once(FOLDER . $i . ".php");

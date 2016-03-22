@@ -42,6 +42,18 @@ class Auction extends Product {
 	public static function getPrimaryAttr() {
 		return "pid";
 	}
+
+	public static function scrape($url, $person, $description = NULL) {
+		//$dom = file_get_html($url);
+
+		$arr = parent::scrape($url, $person, $description);
+
+		$arr['minPrice'] = rand(1,10);
+		$arr['startTime'] = date("Y/m/d");
+		$arr['endTime'] = date("Y/m/d", strtotime("+2 weeks"));	
+
+		return $arr;
+	}
 }
 
 ?>

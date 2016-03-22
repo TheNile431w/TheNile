@@ -41,7 +41,15 @@ class Purchase extends Product {
 		return "pid";
 	}
 
-	
+	public static function scrape($url, $person, $description = NULL) {
+		//$dom = file_get_html($url);
+
+		$arr = parent::scrape($url, $person, $description);
+
+		$arr['qty'] = rand(1,10);
+
+		return $arr;
+	}
 }
 
 ?>

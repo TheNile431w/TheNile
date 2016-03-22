@@ -25,6 +25,12 @@ class database {
 		return "Already open";
 	}
 
+	public function getError() {
+		if(!is_null($this->handle))
+			return $this->handle->error;
+		return FALSE;
+	}
+
 	public function close() {
 		if(!is_null($this->handle))
 			$this->handle->close();
@@ -32,10 +38,9 @@ class database {
 		return true;
 	}
 
-	public function getError() {
+	public function last_insert_id() {
 		if(!is_null($this->handle))
-			return $this->handle->errno;
-		return false;
+			return $this->handle->insert_id;
 	}
 
 	public function real_escape_string($str) {
