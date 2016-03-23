@@ -29,7 +29,7 @@
               }
             }
 
-            echo(traverse(ParentCategory::getArray()));
+            echo(traverse(ParentCategory::getArray("All")));
 
             ?>
           </ul>
