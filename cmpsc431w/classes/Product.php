@@ -59,8 +59,8 @@ class Product extends Entity {
 		$temp = pathinfo($img)['basename'];
 
 		$old_path = getcwd();
-		chdir("../../images");
-		$output = shell_exec('curl -O ' . $url);
+		chdir("images");
+		$output = shell_exec('curl -O ' . $img);
 		chdir($old_path);
 		
 		$arr['img'] = $temp;

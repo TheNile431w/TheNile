@@ -27,7 +27,7 @@ $user3 = new Person(array(
 	"password" => "kevinPass",
 	"income" => "5000",
 	"gender" => "Male",
-	"bday" => "1995/01/26"));
+	"bday" => "1995/01/26"));	
 
 $user4 = new Person(array(
 	"username" => "alexaLewis",
@@ -66,11 +66,11 @@ $user7 = new Person(array(
 	"bday" => "1990/08/20"));
 
 $user8 = new Person(array(
-	"username" => "johnDoe",
-	"name" => "John Doe",
+	"username" => "johnnieDoe",
+	"name" => "Johnnie Doe",
 	"email" => "john@doe.com",
-	"password" => "johnPass",
-	"income" => "1000",
+	"password" => "johnniePass",
+	"income" => "3000",
 	"gender" => "Male",
 	"bday" => "1996/11/02"));
 
