@@ -43,6 +43,6 @@ if(isset($_POST['login_username']) AND isset($_POST['login_password']) AND !empt
 
 <link rel="stylesheet" type="text/css" href="Dependencies/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="Dependencies/bootstrap/css/bootstrap-theme.min.css" />
-<script type="text/javascript" src="Dependencies/jquery/jquery.min.js" />
-<script type="text/javascript" src="Dependencies/bootstrap/js/bootstrap.min.js" />
+<script type="text/javascript" src="Dependencies/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="Dependencies/bootstrap/js/bootstrap.min.js"></script>
 
