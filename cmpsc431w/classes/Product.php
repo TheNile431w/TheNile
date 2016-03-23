@@ -52,28 +52,46 @@ class Product extends Entity {
 	}
 
 	public static function scrape($url, $person, $description = NULL) {
-		$dom = file_get_html($url);
+		//$html = file_get_contents($url);
+		$dom = file_get_html(trim($url));
+		
+		echo $url . "\n";
 
 		$arr['pname'] = $dom->find("span[id=productTitle]", 0)->innerText() . "\n";
 		$img = $dom->find("img[id=landingImage]", 0)->src;
 		$temp = pathinfo($img)['basename'];
+
+
+		//echo "hola \n";
+		//$result = $dom->find("#fbSection ul",0)->innerText();
+		// echo($url . ": productDescriptionWrapper: " . strpos($html, "productDescriptionWrapper"));
+		//var_dump($result);
+		//return;
+
 
 		$old_path = getcwd();
 		chdir("images");
 		$output = shell_exec('curl -O ' . $img);
 		chdir($old_path);
 		
+
+	
+
 		$arr['img'] = $temp;
 		$arr['location'] = "State College";
 		if(is_null($description)) {
-			$arr['description'] = trim($dom->find("div[id=productDescription] p", 0)->innerText());
+			$arr['description'] = trim($dom->find("#feature-bullets ul",0)->innerText());
 		} else {
 			$arr['description'] = $description;
 		}
-		$tmp = $dom->find("span[id=priceblock_ourprice]", 0)->innerText();
-		echo($tmp);
-		$arr['buy_out'] = trim(explode("-", $tmp)[0], " \t\n\r\0\x0B\$");
-		echo($arr['buy_out']);
+		$tmp = $dom->find("span[id=priceblock_ourprice]", 0);
+		if(is_null($tmp))
+			$tmp = $dom->find("span[id=priceblock_saleprice]", 0);
+		if(is_null($tmp))
+			$tmp = rand(2000, 10000) / 100;
+		else
+			$tmp = trim(explode("-", $tmp->innerText())[0], " \t\n\r\0\x0B\$");
+		$arr['buy_out'] = $tmp;
 		$arr['sold_by'] = $person;
 
 		return $arr;

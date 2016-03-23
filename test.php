@@ -2,15 +2,6 @@
 
 include("cmpsc431w/Header.php");
 
-$p = new Person(array(
-	"username" => "testuser",
-	"name" => "John Doe",
-	"email" => "scott.enand@gmail.com",
-	"password" => "password",
-	"income" => "2000",
-	"gender" => "Male",
-	"bday" => "1993/01/01"));
-
 // print_r(Person::getAttributeList());
 
 $c = new Category(array(
@@ -104,12 +95,13 @@ $c20 = new Category(array(
 	"description" => "Egyptian food",
 	"parent" => "All"));
 echo("\n\n\nHERE\n\n\n");
-$p1 = new Purchase(Purchase::scrape("http://www.amazon.com/Ajwa-Dates-Egyptian-Valley-Delicious/dp/B012HW8F82/ref=sr_1_7_a_it?ie=UTF8&qid=1458679725&sr=8-7&keywords=Egyptian+food", "johnDoe"));
 
-new PartOf(array(
-	"category" => "Food",
-	"pid" => $p1->get("pid")));
+// $p1 = new Purchase(Purchase::scrape("http://www.amazon.com/Ajwa-Dates-Egyptian-Valley-Delicious/dp/B012HW8F82/ref=sr_1_7_a_it?ie=UTF8&qid=1458679725&sr=8-7&keywords=Egyptian+food", "johnDoe"));
 
+// new PartOf(array(
+// 	"category" => "Food",
+// 	"pid" => $p1->get("pid")));
+/*
 $p2 = new Purchase(Purchase::scrape("http://www.amazon.com/ToySmith-Dig-Play-Egyptian-Tomb/dp/B000LOBORS/ref=sr_1_2?ie=UTF8&qid=1458679272&sr=8-2&keywords=Egyptian+toys", "tutankamon"));
 
 new PartOf(array(
@@ -142,15 +134,13 @@ new PartOf(array(
 	"pid" => $p6->get("pid")));
 
 
-$p7 = new Purchase(Purchase::scrape("http://www.amazon.com/EGYPTIAN-Adventure-Featuring-Decorative-Accessories/dp/B00VSEY94U/ref=sr_1_5?ie=UTF8&qid=1458679272&sr=8-5&keywords=Egyptian+toys", "kevinCohen"));
+$p7 = new Purchase(Purchase::scrape("http://www.amazon.com/EGYPTIAN-Adventure-Featuring-Decorative-Accessories/dp/B00VSEY94U/ref=sr_1_5?ie=UTF8&qid=1458679272&sr=8-5&keywords=Egyptian+toys","kevinCohen"));
 
 new PartOf(array(
 	"category" => "Toys",
 	"pid" => $p7->get("pid")));
 
-$p8 = new Purchase(Purchase::scrape("
-http://www.amazon.com/Hen-night-Personality-exaggerated-modelling-necklace/dp/B01A917TCQ/ref=sr_1_1?ie=UTF8&qid=1458679165&sr=8-1&keywords=egyptian+earings
-", "kevinCohen"));
+$p8 = new Purchase(Purchase::scrape("http://www.amazon.com/Hen-night-Personality-exaggerated-modelling-necklace/dp/B01A917TCQ/ref=sr_1_1?ie=UTF8&qid=1458679165&sr=8-1&keywords=egyptian+earings", "kevinCohen"));
 
 new PartOf(array(
 	"category" => "Necklaces",
@@ -178,11 +168,11 @@ new PartOf(array(
 	"category" => "Toys",
 	"pid" => $p11->get("pid")));
 
-$p12 = new Purchase(Purchase::scrape("http://www.amazon.com/Medium-CLEOPATRA-ORIENTAL-NECKLACE-B20/dp/B007FQLY7A/ref=sr_1_1?ie=UTF8&qid=1458681021&sr=8-1&keywords=egyptian+necklace", "kevinCohen"));
+// $p12 = new Purchase(Purchase::scrape("http://www.amazon.com/Medium-CLEOPATRA-ORIENTAL-NECKLACE-B20/dp/B007FQLY7A/ref=sr_1_1?ie=UTF8&qid=1458681021&sr=8-1&keywords=egyptian+necklace", "kevinCohen"));
 
-new PartOf(array(
-	"category" => "Necklaces",
-	"pid" => $p12->get("pid")));
+// new PartOf(array(
+// 	"category" => "Necklaces",
+// 	"pid" => $p12->get("pid")));
 
 $p13 = new Purchase(Purchase::scrape("http://www.amazon.com/Thames-Kosmos-Classic-Science-Archaeology/dp/B001ALLMX2/ref=sr_1_8?ie=UTF8&qid=1458679272&sr=8-8&keywords=Egyptian+toys", "jorgeJim"));
 
@@ -278,11 +268,11 @@ new PartOf(array(
 	"pid" => $p26->get("pid")));
 
 
-$p27 = new Purchase(Purchase::scrape("http://www.amazon.com/Egyptian-Goddess-Sculptures-Statue-thedigitalangel/dp/B001L524J8/ref=sr_1_38?ie=UTF8&qid=1458679165&sr=8-38&keywords=egyptian+earings", "jorgeJim"));
+// $p27 = new Purchase(Purchase::scrape("http://www.amazon.com/Egyptian-Goddess-Sculptures-Statue-thedigitalangel/dp/B001L524J8/ref=sr_1_38?ie=UTF8&qid=1458679165&sr=8-38&keywords=egyptian+earings", "jorgeJim"));
 
-new PartOf(array(
-	"category" => "Sculptures",
-	"pid" => $p27->get("pid")));
+// new PartOf(array(
+// 	"category" => "Sculptures",
+// 	"pid" => $p27->get("pid")));
 
 
 $p28 = new Purchase(Purchase::scrape("http://www.amazon.com/Design-Toscano-Egyptian-Horus-Sculpture/dp/B00FFG9KSM/ref=sr_1_1?ie=UTF8&qid=1458679861&sr=8-1&keywords=Egyptian+sculptures", "nickPatel"));
@@ -385,12 +375,12 @@ new PartOf(array(
 	"category" => "Paintings",
 	"pid" => $p41->get("pid")));
 
+*/
+// $p42 = new Purchase(Purchase::scrape("http://www.amazon.com/H-COZY-Egyptian-Pyramids-beautiful-nyjzd104/dp/B0179QL5GA/ref=sr_1_4?ie=UTF8&qid=1458680078&sr=8-4&keywords=Egyptian+painting", "johnnieDoe"));
 
-$p42 = new Purchase(Purchase::scrape("http://www.amazon.com/H-COZY-Egyptian-Pyramids-beautiful-nyjzd104/dp/B0179QL5GA/ref=sr_1_4?ie=UTF8&qid=1458680078&sr=8-4&keywords=Egyptian+painting", "johnnieDoe"));
-
-new PartOf(array(
-	"category" => "Paintings",
-	"pid" => $p42->get("pid")));
+// new PartOf(array(
+// 	"category" => "Paintings",
+// 	"pid" => $p42->get("pid")));
 
 
 $p43 = new Purchase(Purchase::scrape("http://www.amazon.com/Design-Toscano-Rameses-Between-Anubis/dp/B002T0KNZG/ref=sr_1_7?ie=UTF8&qid=1458680078&sr=8-7&keywords=Egyptian+painting
