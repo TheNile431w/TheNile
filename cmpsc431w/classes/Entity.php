@@ -223,41 +223,37 @@ abstract class Entity {
 		$db->close();
 	}
 
+	/**
+	 * Load ( $args ) : loads an array of objects.
+	 * If $args is a string, it is treated as a WHERE clause in SQL.
+	 * If $args is an integer, it is treated as the primary key.
+	 * If $args is an array, it treated as an associative array of criteria ( ALL [ key ] = [ value ] )
+	 * 
+	 * @param  MIXED  $args criteria
+	 * @return ARRAY        Array ( numerically indexed ) of result objects.
+	 */
 	public function load($args) {
-		$info = static::getStaticSQLInfo();
-		$tables = array();
-		$temp = static::getTableName();
-		while($temp != "Entity") {
-			array_unshift($tables, $temp);
-			$temp = get_parent_class($temp);
-		}
-
-		if(is_int($args) OR is_string($args)) {
+		if(is_string($args)) {
+			$t = static::getTableName();
+			$r = $db->query("SELECT * FROM $t WHERE " . $db->real_escape_string($args));
+			$res = array();
+			for($i=0; $i<$r->num_rows; $i++) {
+				$res[] = new $t($r->fetch_assoc());
+			}
+			return $res;
+		} elseif(is_int($args)) {
+			$t = static::getTableName();
 			// LOAD FROM KEY
 			$db = new database();
 			$res = array();
-			foreach($tables as $t) {
-				$r = $db->query("SELECT * FROM " . $t . " WHERE ". $t::getPrimaryAttr() ."='" . $args . "';");
-				if($r->num_rows == 0)
-					return array();
-				else {
-					$tempRes = FALSE;
-					$i = 0;
-					while($tempRes = $r->fetch_assoc()) {
-						if(isset($res[$i]))
-							$res[$i] = array_merge($res[$i], $r->fetch_assoc());
-						else
-							$res[$i] = $r->fetch_assoc();
-						$i++;
-					}
-				}
+			$r = $db->query("SELECT * FROM " . $t . " WHERE ". $t::getPrimaryAttr() ."='" . $args . "';");
+
+			for($i=0; $i<$r->num_rows; $i++) {
+				$res[$i] = new $t($r->fetch_assoc());
 			}
-			foreach($res as $i=>$r) {
-				$staticTable = static::getTableName();
-				$res[$i] = new $staticTable($res[$i]);
-			}
+
 			return $res;
-		} else {
+		} elseif(is_array($args)) {
 			$res = array();
 			foreach($tables as $t) {
 				$whereClause = array();
@@ -286,6 +282,8 @@ abstract class Entity {
 				$res[$i] = new $staticTable($res[$i]);
 			}
 			return $res;
+		} else {
+			return array();
 		}
 	}
 
