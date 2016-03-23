@@ -25,7 +25,7 @@ $CLASSES = array(
 ));
 
 // INCLUDE ABOVE CLASSES : up to 3 levels deep
-define("FOLDER", "classes/");
+define("FOLDER", "cmpsc431w/classes/");
 foreach($CLASSES as $i => $c) {
 	if(is_array($c)) {
 		require_once(FOLDER . $i . ".php");
