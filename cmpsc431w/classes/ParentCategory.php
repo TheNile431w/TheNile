@@ -48,6 +48,20 @@ class ParentCategory extends Entity {
 	public static function getPrimaryAttr() {
 		return "child";
 	}
+
+	public static function getArray($root) {
+		$return = array();
+
+		$db = new database();
+		$db->open();
+		$r = $db->query("SELECT * FROM " . self::getTableName() . " WHERE PARENT = " . $root);
+		if(!$r)
+			return $root;
+		for($i=0; $i<$r->num_rows; $i++) {
+			$res = $r->fetch_assoc();
+			$return[$root] = self::getArray($res["child"]);
+		}
+	}
 }
 
 ?>
