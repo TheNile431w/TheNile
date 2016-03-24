@@ -2,11 +2,11 @@
 
 include("cmpsc431w/Header.php");
 
-// $p1 = new Purchase(Purchase::scrape("http://www.amazon.com/Ajwa-Dates-Egyptian-Valley-Delicious/dp/B012HW8F82/ref=sr_1_7_a_it?ie=UTF8&qid=1458679725&sr=8-7&keywords=Egyptian+food", "johnDoe"));
+$p1 = new Purchase(Purchase::scrape("http://www.amazon.com/Ajwa-Dates-From-Saudi-Arabia/dp/B00WXYTMGE/ref=pd_sim_sbs_325_4?ie=UTF8&dpID=41ul5sjIg4L&dpSrc=sims&preST=_AC_UL160_SR160%2C160_&refRID=04RCSHQ7W368AKETA213", "johnDoe"));
 
-// new PartOf(array(
-// 	"category" => "Food",
-// 	"pid" => $p1->get("pid")));
+new PartOf(array(
+ 	"category" => "Food",
+ 	"pid" => $p1->get("pid")));
 
 $p2 = new Purchase(Purchase::scrape("http://www.amazon.com/ToySmith-Dig-Play-Egyptian-Tomb/dp/B000LOBORS/ref=sr_1_2?ie=UTF8&qid=1458679272&sr=8-2&keywords=Egyptian+toys", "tutankamon"));
 
@@ -74,11 +74,11 @@ new PartOf(array(
 	"category" => "Toys",
 	"pid" => $p11->get("pid")));
 
-// $p12 = new Purchase(Purchase::scrape("http://www.amazon.com/Medium-CLEOPATRA-ORIENTAL-NECKLACE-B20/dp/B007FQLY7A/ref=sr_1_1?ie=UTF8&qid=1458681021&sr=8-1&keywords=egyptian+necklace", "kevinCohen"));
+$p12 = new Purchase(Purchase::scrape("http://www.amazon.com/Akribos-XXIV-AK813BK-Sunburst-Chronograph/dp/B00U0XC1K4/ref=sr_1_1?m=ATVPDKIKX0DER&s=apparel&ie=UTF8&qid=1458853454&sr=1-1&nodeID=14008282011&refinements=p_6%3AATVPDKIKX0DER", "kevinCohen"));
 
-// new PartOf(array(
-// 	"category" => "Necklaces",
-// 	"pid" => $p12->get("pid")));
+new PartOf(array(
+ 	"category" => "Necklaces",
+ 	"pid" => $p12->get("pid")));
 
 $p13 = new Purchase(Purchase::scrape("http://www.amazon.com/Thames-Kosmos-Classic-Science-Archaeology/dp/B001ALLMX2/ref=sr_1_8?ie=UTF8&qid=1458679272&sr=8-8&keywords=Egyptian+toys", "jorgeJim"));
 
@@ -174,11 +174,11 @@ new PartOf(array(
 	"pid" => $p26->get("pid")));
 
 
-// $p27 = new Purchase(Purchase::scrape("http://www.amazon.com/Egyptian-Goddess-Sculptures-Statue-thedigitalangel/dp/B001L524J8/ref=sr_1_38?ie=UTF8&qid=1458679165&sr=8-38&keywords=egyptian+earings", "jorgeJim"));
+$p27 = new Purchase(Purchase::scrape("http://www.amazon.com/Portable-RAVPower-External-Technology-Smartphones/dp/B00Y2PX4U2/ref=pd_sim_107_2?ie=UTF8&dpID=418chqW3G5L&dpSrc=sims&preST=_AC_UL160_SR160%2C160_&refRID=1K4JHHHS8F8YNBMJT5QY", "jorgeJim"));
 
-// new PartOf(array(
-// 	"category" => "Sculptures",
-// 	"pid" => $p27->get("pid")));
+new PartOf(array(
+ 	"category" => "Electronics",
+ 	"pid" => $p27->get("pid")));
 
 
 $p28 = new Purchase(Purchase::scrape("http://www.amazon.com/Design-Toscano-Egyptian-Horus-Sculpture/dp/B00FFG9KSM/ref=sr_1_1?ie=UTF8&qid=1458679861&sr=8-1&keywords=Egyptian+sculptures", "nickPatel"));
@@ -282,11 +282,11 @@ new PartOf(array(
 	"pid" => $p41->get("pid")));
 
 
-// $p42 = new Purchase(Purchase::scrape("http://www.amazon.com/H-COZY-Egyptian-Pyramids-beautiful-nyjzd104/dp/B0179QL5GA/ref=sr_1_4?ie=UTF8&qid=1458680078&sr=8-4&keywords=Egyptian+painting", "johnnieDoe"));
+$p42 = new Purchase(Purchase::scrape("http://www.amazon.com/dp/B00VH8G1SY/ref=gbps_img_s-3_6522_3793e852?smid=A294P4X9EWVXLJ&pf_rd_p=2443876522&pf_rd_s=slot-3&pf_rd_t=701&pf_rd_i=gb_main&pf_rd_m=ATVPDKIKX0DER&pf_rd_r=0SX7EG8J7G6K05RHE1E0", "johnnieDoe"));
 
-// new PartOf(array(
-// 	"category" => "Paintings",
-// 	"pid" => $p42->get("pid")));
+new PartOf(array(
+ 	"category" => "Paintings",
+ 	"pid" => $p42->get("pid")));
 
 
 $p43 = new Purchase(Purchase::scrape("http://www.amazon.com/Design-Toscano-Rameses-Between-Anubis/dp/B002T0KNZG/ref=sr_1_7?ie=UTF8&qid=1458680078&sr=8-7&keywords=Egyptian+painting
@@ -305,11 +305,11 @@ new PartOf(array(
 	"pid" => $p44->get("pid")));
 
 
-//$p45 = new Purchase(Purchase::scrape("http://www.amazon.com/Pack-Egyptian-Paintings-Papyrus-Nefertiti/dp/B00Y7IMWGG/ref=sr_1_25?ie=UTF8&qid=1458680078&sr=8-25&keywords=Egyptian+painting", "scottenand"));
+$p45 = new Purchase(Purchase::scrape("http://www.amazon.com/gp/product/B0198TZYU4/ref=s9_aas_bw_g309_i1?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=merchandised-search-3&pf_rd_r=0HTR72RR395TPXKRMHXB&pf_rd_t=101&pf_rd_p=2435238082&pf_rd_i=13577883011", "scottenand"));
 
-//new PartOf(array(
-//	"category" => "Paintings",
-//	"pid" => $p45->get("pid")));
+new PartOf(array(
+	"category" => "Paintings",
+	"pid" => $p45->get("pid")));
 
 
 $p46 = new Purchase(Purchase::scrape("http://www.amazon.com/Leolana-Egyptian-Painting-Authentic-Paper-9x13-Multi/dp/B010CC0P1Y/ref=sr_1_31?ie=UTF8&qid=1458680078&sr=8-31&keywords=Egyptian+painting", "microsoft"));
