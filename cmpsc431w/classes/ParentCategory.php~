@@ -61,7 +61,7 @@ class ParentCategory extends Entity {
 		$r = $db->query("SELECT * FROM " . self::getTableName() . " WHERE parent = '" . $rt . "'");
 		for($i=0; $i<$r->num_rows; $i++) {
 			$res = $r->fetch_assoc();
-			$return[$res["child"]] = self::recursiveArrayBuild($res["child"]);
+			$return[$res["child"]] = self::getArray($res["child"]);
 		}
 		return $return;
 	}
