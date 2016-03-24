@@ -287,20 +287,6 @@ abstract class Entity {
 		}
 	}
 
-	public function getRandom($count) {
-		if(!is_numeric($count))
-			return FALSE;
-		$t = static::getTableName();
-		$db = new database();
-		$db->open();
-		$r = $db->query("SELECT * FROM $t ORDER BY RAND() LIMIT $count");
-		$return = array();
-		for($i=0; $i<$r->num_rows; $i++) {
-			$return[] = new $t($r->fetch_assoc());
-		}
-		return $return;
-	}
-
 	private function setAttrs($args, $changeVal = NULL) {
 		foreach($args as $a => $v) {
 			if(in_array($a, static::getAttributeList())) {
@@ -408,4 +394,3 @@ abstract class Entity {
 }
 
 ?>
-

@@ -2,8 +2,6 @@
 
 require_once("Header.php");
 
-define("IMAGE_FOLDER", "images/");
-
 $user = FALSE;
 $msg = FALSE;
 
@@ -30,7 +28,7 @@ if(isset($_POST['login_username']) AND isset($_POST['login_password']) AND !empt
 	} catch(Exception $e) {
 		$msg = "You have entered an incorrect username.";
 	}
-} elseif(isset($_GET["logout"]) AND $_GET["logout"] == "true") {
+} elseif(isset($_POST["logout"]) AND $_POST["logout"] == "true") {
 	$user = FALSE;
 	unset($_COOKIE["username"]);
 	$msg = "Logged out.";
