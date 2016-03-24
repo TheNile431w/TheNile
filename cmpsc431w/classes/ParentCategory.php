@@ -50,16 +50,18 @@ class ParentCategory extends Entity {
 	}
 
 	public static function getArray($root) {
+		return array($root => self::recursiveArrayBuild($root));
+	}
+
+	private static function recursiveArrayBuild($rt) {
 		$return = array();
 
 		$db = new database();
 		$db->open();
-		$r = $db->query("SELECT * FROM " . self::getTableName() . " WHERE parent = " . $root);
-		if(!$r)
-			return $root;
+		$r = $db->query("SELECT * FROM " . self::getTableName() . " WHERE parent = '" . $rt . "'");
 		for($i=0; $i<$r->num_rows; $i++) {
 			$res = $r->fetch_assoc();
-			$return[$root] = self::getArray($res["child"]);
+			$return[$res["child"]] = self::recursiveArrayBuild($res["child"]);
 		}
 		return $return;
 	}
