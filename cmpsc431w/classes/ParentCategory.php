@@ -54,7 +54,7 @@ class ParentCategory extends Entity {
 
 		$db = new database();
 		$db->open();
-		$r = $db->query("SELECT * FROM " . self::getTableName() . " WHERE PARENT = " . $root);
+		$r = $db->query("SELECT * FROM " . self::getTableName() . " WHERE parent = " . $root);
 		if(!$r)
 			return $root;
 		for($i=0; $i<$r->num_rows; $i++) {
