@@ -20,7 +20,6 @@
             <?php
 
             function traverse($array) {
-		var_dump($array);
               foreach($array as $k => $v) {
                 if(is_string($v)) {
                   return "<li>" . $v . "</li>";
