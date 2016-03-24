@@ -1,6 +1,6 @@
 <?php
 
-include("../Header.php");
+include("../../Header.php");
 
 createTables($CLASSES);
 

@@ -61,6 +61,7 @@ class ParentCategory extends Entity {
 			$res = $r->fetch_assoc();
 			$return[$root] = self::getArray($res["child"]);
 		}
+		return $return;
 	}
 }
 
