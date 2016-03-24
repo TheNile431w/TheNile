@@ -2,6 +2,8 @@
 
 require_once("Header.php");
 
+define("IMAGE_FOLDER", "images/");
+
 $user = FALSE;
 $msg = FALSE;
 
@@ -99,3 +101,4 @@ if(isset($_POST['login_username']) AND isset($_POST['login_password']) AND !empt
     border-radius: 6px 0 6px 6px;
 }
 </style>
+

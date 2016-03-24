@@ -22,7 +22,9 @@
       foreach(Purchase::getRandom(9) as $item) {
         echo('<div class="col-xs-6 col-md-3">
                 <div class="thumbnail">
-                  <img src="'. IMAGE_FOLDER . $item->get("img") .'" alt="' . $item->get("description") . '">
+                  <a href="product.php?pid='.$item->getID().'">
+                    <img src="'. IMAGE_FOLDER . urlencode($item->get("img")) .'">
+                  </a>
                   <div class="caption">
                     <h3>'.$item->get("name").'</h3>
                     <p>'.$item->get("description").'</p>
@@ -34,5 +36,6 @@
     </div>
   </body>
 </html>
+
 
 

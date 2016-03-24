@@ -66,7 +66,7 @@
                 </div>
                 <div class="form-group" style="width:95%;">
                   <div class="col-sm-offset-2 col-sm-10">
-                    <a href="signup.php">
+                    <a href="newuser.php">
                       <button type="button" class="btn btn-default pull-left">Sign Up</button>
                     </a>
                     <button type="submit" class="btn btn-default pull-right">Sign in</button>
@@ -78,7 +78,7 @@
           } else {
             ?>
             <a class="dropdown-toggle" href="#" data-toggle="dropdown"><?php echo($user->get("name")); ?></a>
-            <ul class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+            <ul class="dropdown-menu">
               <li><a href="profile.php">Profile</a></li>
               <li><a href="<?php echo($_SERVER['PHP_SELF']); ?>?logout=true">Logout</a></li>
             </ul>
@@ -92,4 +92,5 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
 

@@ -293,7 +293,7 @@ abstract class Entity {
 		$t = static::getTableName();
 		$db = new database();
 		$db->open();
-		$r = $db->query("SELECT column FROM $t ORDER BY RAND() LIMIT $count");
+		$r = $db->query("SELECT * FROM $t ORDER BY RAND() LIMIT $count");
 		$return = array();
 		for($i=0; $i<$r->num_rows; $i++) {
 			$return[] = new $t($r->fetch_assoc());
@@ -408,4 +408,5 @@ abstract class Entity {
 }
 
 ?>
+
 
