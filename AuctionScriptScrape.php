@@ -12,11 +12,11 @@ new PartOf(array(
 	"pid" => $a1->get("pid")));
 
 
-// $a2 = new Auction(Auction::scrape("http://www.amazon.com/California-Costumes-Egyptian-Costume-Sandals/dp/B00YHFEQ4A/ref=sr_1_2?ie=UTF8&qid=1458679540&sr=8-2&keywords=egyptian+sandals", "johnnieDoe" ));
+$a2 = new Auction(Auction::scrape("http://www.amazon.com/dp/B00VQJWFC0?psc=1", "johnnieDoe" ));
 
-// new PartOf(array(
-// 	"category" => "Sandals",
-// 	"pid" => $a2->get("pid")));
+new PartOf(array(
+	"category" => "Sandals",
+ 	"pid" => $a2->get("pid")));
 
 $a3 = new Auction(Auction::scrape("http://www.amazon.com/California-Costumes-Goddess-Costume-Accessory/dp/B003JH8T1I/ref=sr_1_1?ie=UTF8&qid=1458679540&sr=8-1&keywords=egyptian+sandals", "johnDoe" ));
 
@@ -87,11 +87,11 @@ new PartOf(array(
 	"pid" => $a12->get("pid")));
 
 
-// $a13 = new Auction(Auction::scrape("http://www.amazon.com/QZUnique-Ancient-Egyptian-Printed-Leggings/dp/B016MD8T7O/ref=sr_1_6?ie=UTF8&qid=1458679736&sr=8-6&keywords=Egyptian+Clothing", "scottenand" ));
+$a13 = new Auction(Auction::scrape("http://www.amazon.com/dp/B015RPDVPS?psc=1", "scottenand" ));
 
-// new PartOf(array(
-// 	"category" => "Clothing",
-// 	"pid" => $a13->get("pid")));
+	new PartOf(array(
+	"category" => "Clothing",
+ 	"pid" => $a13->get("pid")));
 
 
 $a14 = new Auction(Auction::scrape("http://www.amazon.com/Looney-Tunes-Martian-Egyptian-Graphic/dp/B00PBG69XK/ref=sr_1_8?ie=UTF8&qid=1458679736&sr=8-8&keywords=Egyptian+Clothing", "scottenand" ));
@@ -108,31 +108,31 @@ new PartOf(array(
 	"pid" => $a15->get("pid")));
 
 
-// $a16 = new Auction(Auction::scrape("http://www.amazon.com/Shivali-Womens-Sweater-Polyamide-Cardigan/dp/B015MT5XDC/ref=sr_1_2?s=apparel&ie=UTF8&qid=1458680954&sr=1-2&nodeID=7141123011&keywords=clothing", "johnnieDoe" ));
+$a16 = new Auction(Auction::scrape("http://www.amazon.com/Womens-Vogue-Shoulder-Design-Shirt/dp/B00V4GB12K/ref=pd_srecs_cs_193_1?ie=UTF8&dpID=4105ZM68CxL&dpSrc=sims&preST=_AC_UL250_SR170%2C250_&refRID=1F6VVY4CKJT7199286JT", "johnnieDoe" ));
 
-// new PartOf(array(
-// 	"category" => "Clothing",
-// 	"pid" => $a16->get("pid")));
-
-
-// $a17 = new Auction(Auction::scrape("http://www.amazon.com/Womens-Neck-Short-Sleeve-DolmanTop/dp/B01A9C14PS/ref=sr_1_7?s=apparel&ie=UTF8&qid=1458680954&sr=1-7&nodeID=7141123011&keywords=clothing", "scottenand" ));
-
-// new PartOf(array(
-// 	"category" => "Clothing",
-// 	"pid" => $a17->get("pid")));
+new PartOf(array(
+ 	"category" => "Clothing",
+ 	"pid" => $a16->get("pid")));
 
 
-// $a18 = new Auction(Auction::scrape("http://www.amazon.com/Toms-Ware-Premium-Contrast-TWNMS310S-1-SKYBLUE-XL/dp/B00JQGLDO6/ref=sr_1_10?s=apparel&ie=UTF8&qid=1458680954&sr=1-10&nodeID=7141123011&keywords=clothing", "scottenand" ));
+$a17 = new Auction(Auction::scrape("http://www.amazon.com/dp/B012VP9OA8?psc=1", "scottenand" ));
 
-// new PartOf(array(
-// 	"category" => "Clothing",
-// 	"pid" => $a18->get("pid")));
+new PartOf(array(
+ 	"category" => "Clothing",
+ 	"pid" => $a17->get("pid")));
 
-// $a19 = new Auction(Auction::scrape("http://www.amazon.com/Womens-Neck-Short-Sleeve-DolmanTop/dp/B01A9C14PS/ref=sr_1_7?s=apparel&ie=UTF8&qid=1458680954&sr=1-7&nodeID=7141123011&keywords=clothing", "scottenand" ));
 
-// new PartOf(array(
-// 	"category" => "Clothing",
-// 	"pid" => $a19->get("pid")));
+$a18 = new Auction(Auction::scrape("http://www.amazon.com/dp/B00VUSWJT6?psc=1", "scottenand" ));
+
+	new PartOf(array(
+ 	"category" => "Clothing",
+ 	"pid" => $a18->get("pid")));
+
+$a19 = new Auction(Auction::scrape("http://www.amazon.com/URBAN-mens-bandana-leather-T-shirt/dp/B00SCK9SN0/ref=pd_srecs_cs_193_24?ie=UTF8&dpID=51fOmmnZxpL&dpSrc=sims&preST=_AC_UL250_SR170%2C250_&refRID=107PE9BAY6781RR0X5ZJ", "scottenand" ));
+
+new PartOf(array(
+ 	"category" => "Clothing",
+ 	"pid" => $a19->get("pid")));
 
 
 $a20 = new Auction(Auction::scrape("http://www.amazon.com/SOFIRE-Infant-Toddler-Clothing-Button/dp/B01ASXM3PI/ref=sr_1_13?s=apparel&ie=UTF8&qid=1458680954&sr=1-13&nodeID=7141123011&keywords=clothing", "scottenand" ));
@@ -156,11 +156,11 @@ new PartOf(array(
 	"pid" => $a22->get("pid")));
 
 
-// $a23 = new Auction(Auction::scrape("http://www.amazon.com/Carters-Baby-Piece-Terry-Cardigan/dp/B00XG01LGI/ref=sr_1_17?s=apparel&ie=UTF8&qid=1458681108&sr=1-17&nodeID=7141123011&keywords=clothing", "johnnieDoe" ));
+$a23 = new Auction(Auction::scrape("http://www.amazon.com/dp/B011R3UXXC?psc=1", "johnnieDoe" ));
 
-// new PartOf(array(
-// 	"category" => "Clothing",
-// 	"pid" => $a23->get("pid")));
+new PartOf(array(
+ 	"category" => "Clothing",
+ 	"pid" => $a23->get("pid")));
 
 
 $a24 = new Auction(Auction::scrape("http://www.amazon.com/LittleSpring-Little-Girls-Clothing-Flower/dp/B014A4D9FO/ref=sr_1_20?s=apparel&ie=UTF8&qid=1458681108&sr=1-20&nodeID=7141123011&keywords=clothing", "jorgeJim" ));
@@ -198,7 +198,7 @@ new PartOf(array(
 	"pid" => $a28->get("pid")));
 
 
-$a29 = new Auction(Auction::scrape("http://www.amazon.com/Forever-Womens-Sleeves-Fleece-Hoodie/dp/B00TO4F0QC/ref=sr_1_4?s=apparel&ie=UTF8&qid=1458681239&sr=1-4&nodeID=7141123011&keywords=clothes", "jorgeJim" ));
+$a29 = new Auction(Auction::scrape("http://www.amazon.com/dp/B013TVHBH6?psc=1", "jorgeJim" ));
 
 new PartOf(array(
 	"category" => "Clothing",
@@ -246,11 +246,11 @@ new PartOf(array(
 	"pid" => $a35->get("pid")));
 
 
-// $a36 = new Auction(Auction::scrape("http://www.amazon.com/ABLEGRID%C2%AE-SJ5000-Waterproof-Camcorder-Motorcycle/dp/B012ZSGGS4/ref=sr_1_4?s=electronics&ie=UTF8&qid=1458681883&sr=1-4&keywords=outdoors+sports", "jorgeJim" ));
+$a36 = new Auction(Auction::scrape("http://www.amazon.com/ABLEGRID%C2%AE-SJ5000-Waterproof-Motorcycle-Accessories/dp/B01116IB84/ref=pd_sim_421_2?ie=UTF8&dpID=61XNUXNyVOL&dpSrc=sims&preST=_AC_UL160_SR160%2C160_&refRID=0V6VXFASMTY8HQV5ZSFQ", "jorgeJim" ));
 
-// new PartOf(array(
-// 	"category" => "Outdoors",
-// 	"pid" => $a36->get("pid")));
+new PartOf(array(
+ 	"category" => "Outdoors",
+ 	"pid" => $a36->get("pid")));
 
 
 $a37 = new Auction(Auction::scrape("http://www.amazon.com/waterproof-shockproof-Camcorder-Motorcycle-Accessories/dp/B016IKT2CM/ref=sr_1_5?s=electronics&ie=UTF8&qid=1458681894&sr=1-5&keywords=outdoors+sports", "johnnieDoe" ));
@@ -309,11 +309,11 @@ new PartOf(array(
 	"pid" => $a44->get("pid")));
 
 
-// $a45 = new Auction(Auction::scrape("http://www.amazon.com/HP-DVD-R-4-7GB-Spindle-Handle/dp/B00CHCGRH4/ref=sr_1_10?s=electronics&ie=UTF8&qid=1458681720&sr=1-10&keywords=blank+dvd", "johnnieDoe" ));
+$a45 = new Auction(Auction::scrape("http://www.amazon.com/Yens%C2%AE-White-Sleeves-Envelopes-Window/dp/B00HMCDTSE/ref=pd_sim_23_2?ie=UTF8&dpID=41W%2Bq-IaMOL&dpSrc=sims&preST=_AC_UL160_SR160%2C160_&refRID=1FPERAC0AKPV8BH5DVWW", "johnnieDoe" ));
 
-// new PartOf(array(
-// 	"category" => "Movies",
-// 	"pid" => $a45->get("pid")));
+new PartOf(array(
+ 	"category" => "Movies",
+ 	"pid" => $a45->get("pid")));
 
 
 $a46 = new Auction(Auction::scrape("http://www.amazon.com/Sony-50CRM80RS-CD-R-Audio-Spindle/dp/B0002ZDIKW/ref=sr_1_1?ie=UTF8&qid=1458681736&sr=8-1&keywords=blank+music+cds", "johnnieDoe" ));
@@ -323,11 +323,11 @@ new PartOf(array(
 	"pid" => $a46->get("pid")));
 
 
-// $a47 = new Auction(Auction::scrape("http://www.amazon.com/Verbatim-Minute-Digital-10-Disc-97935/dp/B00ED0Z5OO/ref=sr_1_13?ie=UTF8&qid=1458681736&sr=8-13&keywords=blank+music+cds", "johnnieDoe" ));
+$a47 = new Auction(Auction::scrape("http://www.amazon.com/Verbatim-Branded-Recordable-10-Disc-97955/dp/B00J88QCIE/ref=pd_sim_23_3?ie=UTF8&dpID=415BhZMNg%2BL&dpSrc=sims&preST=_AC_UL160_SR160%2C160_&refRID=0WC9F34FWBY352VCC4D3", "johnnieDoe" ));
 
-// new PartOf(array(
-// 	"category" => "Music",
-// 	"pid" => $a47->get("pid")));
+new PartOf(array(
+ 	"category" => "Music",
+ 	"pid" => $a47->get("pid")));
 
 
 $a48 = new Auction(Auction::scrape("http://www.amazon.com/MAGIX-Samplitude-Music-Studio-2016/dp/B0171RL86Y/ref=sr_1_1?ie=UTF8&qid=1458681811&sr=8-1&keywords=B00ZR00CPQ|B00ZR00DE6|B00ZR00E2C|B0171RL86Y", "johnnieDoe" ));
@@ -337,11 +337,11 @@ new PartOf(array(
 	"pid" => $a48->get("pid")));
 
 
-// $a49 = new Auction(Auction::scrape("http://www.amazon.com/Sony-25CRM80XS-Audio-Color-25-Pack/dp/B0009DRSWQ/ref=sr_1_17?ie=UTF8&qid=1458681835&sr=8-17&keywords=blank+music+cds", "johnnieDoe" ));
+$a49 = new Auction(Auction::scrape("http://www.amazon.com/Sony-100CDQ80SP-Recordable-Media-Spindle/dp/B000HCNZI0/ref=pd_sim_23_3?ie=UTF8&dpID=41pAwK1vygL&dpSrc=sims&preST=_AC_UL160_SR160%2C160_&refRID=0BSNTC44KV4KSB6B6DH6", "johnnieDoe" ));
 
-// new PartOf(array(
-// 	"category" => "Music",
-// 	"pid" => $a49->get("pid")));
+new PartOf(array(
+ 	"category" => "Music",
+ 	"pid" => $a49->get("pid")));
 
 $a50 = new Auction(Auction::scrape("http://www.amazon.com/Egyptian-Tambourine-8-1-2/dp/B00634YQES/ref=sr_1_2?ie=UTF8&qid=1458681908&sr=8-2&keywords=egyptian+instruments", "johnnieDoe" ));
 
