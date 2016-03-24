@@ -34,8 +34,6 @@
               echo(traverse($v));
             }
 
-            // echo(traverse(ParentCategory::getArray("All")));
-
             ?>
           </ul>
         </li>
