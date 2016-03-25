@@ -56,7 +56,7 @@ class database {
 	}
 
 	public function query($q) {
-		// echo($q . "\n");
+		// echo($q);
 		$close = false;
 		if(is_null($this->handle)) {
 			$this->open();
@@ -82,4 +82,5 @@ class database {
 }
 
 ?>
+
 

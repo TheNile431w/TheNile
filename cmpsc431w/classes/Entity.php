@@ -113,10 +113,6 @@ abstract class Entity {
 		}
 	}
 
-	public function test() {
-		return static::getStaticSQLInfo();
-	}
-
 	/**
 	 * static protected getPrimaryAttr : Returns string representation of this table's primary attribute.
 	 * @return string primary attribute(s) (commma , delimited for multiple attributes)
@@ -232,10 +228,13 @@ abstract class Entity {
 	 * @param  MIXED  $args criteria
 	 * @return ARRAY        Array ( numerically indexed ) of result objects.
 	 */
-	public function load($args) {
+	public static function load($args) {
 		if(is_string($args)) {
+			if(!endsWith($args, ";"))
+				$endsWith .= ";";
 			$t = static::getTableName();
-			$r = $db->query("SELECT * FROM $t WHERE " . $db->real_escape_string($args));
+			$db = new database();
+			$r = $db->query($args);
 			$res = array();
 			for($i=0; $i<$r->num_rows; $i++) {
 				$res[] = new $t($r->fetch_assoc());

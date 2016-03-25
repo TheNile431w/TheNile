@@ -50,7 +50,25 @@ class ParentCategory extends Entity {
 	}
 
 	public static function getArray($root) {
-		return array($root => self::recursiveArrayBuild($root));
+		if(is_string($root))
+			return array($root => self::recursiveArrayBuild($root));
+		if(get_class($root) == "ParentCategory")
+			return array($root->get("child") => self::recursiveArrayBuild($root->get("child")));
+	}
+
+	public static function getAncestors($base) {
+		if(is_string($base)) {
+			$db = new database();
+			$r = $db->query("SELECT parent FROM " . self::getTableName() . " WHERE child = '" . $base . "';");
+			if($r->num_rows == 1) {
+				$parent = $r->fetch_assoc()['parent'];
+				return array_merge(self::getAncestors($parent), array($base));
+			} else {
+				return array($base);
+			}
+		}
+		if(get_class($base) == "ParentCategory")
+			return self::getAncestors($base->get("child"));
 	}
 
 	private static function recursiveArrayBuild($rt) {
@@ -58,7 +76,7 @@ class ParentCategory extends Entity {
 
 		$db = new database();
 		$db->open();
-		$r = $db->query("SELECT * FROM " . self::getTableName() . " WHERE parent = '" . $rt . "'");
+		$r = $db->query("SELECT * FROM " . self::getTableName() . " WHERE parent = '" . $rt . "';");
 		for($i=0; $i<$r->num_rows; $i++) {
 			$res = $r->fetch_assoc();
 			$return[$res["child"]] = self::recursiveArrayBuild($res["child"]);
@@ -68,4 +86,5 @@ class ParentCategory extends Entity {
 }
 
 ?>
+
 

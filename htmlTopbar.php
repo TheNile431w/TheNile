@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverted" id="topbar">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -8,21 +8,21 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">The Nile</a>
+      <a class="navbar-brand darkblue" href="index.php">The Nile</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle darkblue" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <?php
 
             function traverse($array) {
               $s = "";
               foreach($array as $k => $v) {
-                $s .= "<li". (!empty($v) ? " class='dropdown-submenu'" : "") ."><a href='#'>" . $k . "</a>";
+                $s .= "<li". (!empty($v) ? " class='dropdown-submenu'" : "") ."><a href='browse.php?category=".$k."'>" . $k . "</a>";
                 if(!empty($v)) {
                   $s .= "<ul class='dropdown-menu'>" . traverse($v) . "</ul>";
                 }
@@ -51,7 +51,7 @@
           <?php
           if($user == FALSE) {
             ?>
-            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
+            <a class="dropdown-toggle darkblue" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
             <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; width: 350px;">
               <form class="navbar-form navbar-right" method="post" action="<?php echo($_SERVER['PHP_SELF']); ?>" style="margin:0px;padding:0px;">
                 <div class="form-group">
@@ -77,7 +77,7 @@
             <?php
           } else {
             ?>
-            <a class="dropdown-toggle" href="#" data-toggle="dropdown"><?php echo($user->get("name")); ?></a>
+            <a class="dropdown-toggle darkblue" href="#" data-toggle="dropdown"><?php echo($user->get("name")); ?> <strong class="caret"></strong></a>
             <ul class="dropdown-menu">
               <li><a href="profile.php">Profile</a></li>
               <li><a href="<?php echo($_SERVER['PHP_SELF']); ?>?logout=true">Logout</a></li>

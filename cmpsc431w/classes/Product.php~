@@ -51,24 +51,6 @@ class Product extends Entity {
 		return "pid";
 	}
 
-	public function getRatings() {
-		$t = RatedBy::getTableName();
-		$id = $this->get('pid');
-		return RatedBy::load("SELECT * FROM $t WHERE pid = $id;");
-	}
-
-	public function getRating() {
-		$t = RatedBy::getTableName();
-		$id = $this->get('pid');
-		$db = new database();
-		$r = $db->query("SELECT AVG(rating) FROM $t WHERE pid = $id;");
-		if($r->num_rows == 1) {
-			$tmp = $r->fetch_assoc();
-			return $tmp[array_keys($tmp)[0]];
-		}
-		return FALSE;
-	}
-
 	public static function scrape($url, $person, $description = NULL) {
 		//$html = file_get_contents($url);
 		$dom = file_get_html(trim($url));
@@ -120,4 +102,3 @@ include("Purchase.php");
 include("Auction.php");
 
 ?>
-
