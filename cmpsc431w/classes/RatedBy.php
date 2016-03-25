@@ -1,10 +1,6 @@
 <?php
 
 class RatedBy extends Entity {
-	public function __construct($args) {
-		parent::__construct($args);
-	}
-
 	public static function getAttributeList() {
 		return array('pid', 'username', 'rating', 'description', 'time');
 	}

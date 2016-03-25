@@ -1,9 +1,6 @@
 <?php
 
 class PurchasedBy extends Entity {
-	public function __construct($args) {
-		parent::__construct($args);
-	}
 
 	public static function getAttributeList() {
 		return array('pid', 'username', 'time', 'unitPrice', 'qty', 'acq_id');

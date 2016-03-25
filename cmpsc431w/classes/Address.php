@@ -1,10 +1,6 @@
 <?php
 
 class Address extends Entity {
-	public function __construct($args) {
-		parent::__construct($args);
-	}
-
 	public static function getAttributeList() {
 		return array('addr_id', 'username', 'description', 'defaultAddr', 'zip', 'street');
 	}

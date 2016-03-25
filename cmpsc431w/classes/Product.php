@@ -1,10 +1,6 @@
 <?php
 
 class Product extends Entity {
-	public function __construct($args) {
-		parent::__construct($args);
-	}
-
 	public static function getAttributeList() {
 		return array('pid', 'pname', 'location', 'description', 'buy_out', 'sold_by', 'img');
 	}

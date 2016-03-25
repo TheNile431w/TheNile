@@ -1,9 +1,6 @@
 <?php
 
 class User extends Entity {
-	public function __construct($args) {
-		parent::__construct($args);
-	}
 
 	public static function getAttributeList() {
 		return array('username', 'name', 'email', 'password', 'income');
