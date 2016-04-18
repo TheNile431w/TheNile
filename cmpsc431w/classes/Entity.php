@@ -9,7 +9,7 @@ abstract class Entity {
 	 * __construct($args) : FULL constructor.
 	 * @param [ int | string | array ] $args : integer primary key or single dimensional array of attributes that define the class
 	 */
-	public function __construct($ar, $newProv=FALSE) {
+	public function __construct($ar, $newProv=NULL) {
 		$args = $ar;
 		$info = static::getStaticSQLInfo();
 		$tables = array();
@@ -25,7 +25,7 @@ abstract class Entity {
 			$this->attrs = array();
 
 		if(is_int($args) OR is_string($args)) {
-			if($newProv)
+			if(!is_null($newProv) AND $newProv == TRUE)
 				throw new Exception("Cannot instantiate a new " . static::getTableName() . " from anything other than an associative array with attributes as keys and values as values.");
 
 			// LOAD FROM KEY
@@ -59,18 +59,24 @@ abstract class Entity {
 					$db = new database();
 					$r = $db->query("SELECT * FROM " . $t . " WHERE " . implode(" AND ", $whereClause) . ";");
 					if($r->num_rows == 1) {
-						if($newProv)
+						if(!is_null($newProv) AND $newProv == TRUE)
 							throw new Exception("A ". $t ." already exists with the same Primary Key values as given for the new entry: " . implode(" AND ", $whereClause));
 						$res = $r->fetch_assoc();
 						$this->setAttrs($res);
 					} elseif($r->num_rows == 0) {
+						if(!is_null($newProv) AND $newProv == FALSE) {
+							throw new Exception("Entity not found");
+						}
 						$newProv = TRUE;
 						break;
 					} else
 						throw new Exception("Multiple entries found.");
 				}
 			} else {
-				$newProv = TRUE;
+				if(is_null($newProv))
+					$newProv = TRUE;
+				elseif($newProv == FALSE)
+					throw new Exception("Not all primary attributes given");
 			}
 		}
 
@@ -237,7 +243,7 @@ abstract class Entity {
 			$r = $db->query($args);
 			$res = array();
 			for($i=0; $i<$r->num_rows; $i++) {
-				$res[] = new $t($r->fetch_assoc());
+				$res[] = new $t($r->fetch_assoc(), FALSE);
 			}
 			return $res;
 		} elseif(is_int($args)) {
@@ -248,7 +254,7 @@ abstract class Entity {
 			$r = $db->query("SELECT * FROM " . $t . " WHERE ". $t::getPrimaryAttr() ."='" . $args . "';");
 
 			for($i=0; $i<$r->num_rows; $i++) {
-				$res[$i] = new $t($r->fetch_assoc());
+				$res[$i] = new $t($r->fetch_assoc(), FALSE);
 			}
 
 			return $res;
@@ -278,7 +284,7 @@ abstract class Entity {
 			}
 			foreach($res as $i=>$r) {
 				$staticTable = static::getTableName();
-				$res[$i] = new $staticTable($res[$i]);
+				$res[$i] = new $staticTable($res[$i], FALSE);
 			}
 			return $res;
 		} else {

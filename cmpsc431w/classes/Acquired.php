@@ -1,9 +1,6 @@
 <?php
 
 class Acquired extends Entity {
-	public function __construct($args) {
-		parent::__construct($args);
-	}
 
 	public static function getAttributeList() {
 		return array('acq_id', 'card_id', 'addr_id');

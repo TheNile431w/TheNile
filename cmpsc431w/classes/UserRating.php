@@ -1,9 +1,6 @@
 <?php
 
 class UserRating extends Entity {
-	public function __construct($args) {
-		parent::__construct($args);
-	}
 
 	public static function getAttributeList() {
 		return array('rater', 'ratee', 'rating', 'description');

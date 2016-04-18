@@ -1,9 +1,6 @@
 <?php
 
 class Person extends User {
-	public function __construct($args) {
-		parent::__construct($args);
-	}
 
 	public static function getAttributeList() {
 		return array_unique(array_merge(array('username', 'gender', 'bday'), parent::getAttributeList()));

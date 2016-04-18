@@ -1,8 +1,8 @@
 <?php
 
 class Category extends Entity {
-	public function __construct($args) {
-		parent::__construct($args);
+	public function __construct($args, $new) {
+		parent::__construct($args, $new);
 
 		if(isset($args['parent'])) {
 			$p = new ParentCategory(array("child"=>$this->getID(), "parent"=>$args['parent']));

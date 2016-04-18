@@ -1,9 +1,6 @@
 <?php
 
 class Auction extends Product {
-	public function __construct($args) {
-		parent::__construct($args);
-	}
 
 	public static function getAttributeList() {
 		return array_unique(array_merge(array('pid', 'minPrice', 'startTime', 'endTime'), parent::getAttributeList()));
