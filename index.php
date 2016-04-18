@@ -2,6 +2,9 @@
   <head>
     <?php include("htmlHeader.php"); ?>
     <title>TheNile Main</title>
+    <script type="text/javascript">
+
+    </script>
   </head>
 
   <body>
@@ -27,19 +30,24 @@
       </div>
       <div class="col-md-9 col-lg-10">
         <div class="container" style="width:100%;">
-          <?php
-          foreach(Purchase::getRandom(12) as $i => $item) {
-            if($i != 0 AND $i % 4 == 0)
-              echo('</div><div class="row">');
-            echo(productPreview($item));
-            $i++;
-          }
-          ?>
+          <div class="row">
+            <?php
+            foreach(Purchase::getRandom(12) as $i => $item) {
+              if($i != 0 AND $i % 4 == 0)
+                echo('</div><div class="row">');
+              echo(productPreview($item));
+              $i++;
+            }
+            ?>
+          </div>
+          <br /><br /><br />
+          <div class="row">
+            <?php
+              echo(prodRow(Purchase::getRandom(12)));
+            ?>
+          </div>
         </div>
       </div>
     </div>
   </body>
 </html>
-
-
-

@@ -286,7 +286,7 @@ abstract class Entity {
 		}
 	}
 
-	public function getRandom($count) {
+	public static function getRandom($count) {
 		if(!is_numeric($count))
 			return FALSE;
 		$t = static::getTableName();
