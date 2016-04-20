@@ -4,21 +4,17 @@
     <?php include("htmlTopbar.php"); ?>
 
 <html>
-  <!--
-    Modified from the Debian original for Ubuntu
-    Last updated: 2014-03-19
-    See: https://launchpad.net/bugs/1288690
-  -->
+  
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>TheNile Main</title>
+    <title>Sign up</title>
   </head>
   <body>
     <center><h1>Signup to The Nile</h1></center>
 
     <!-- Will add a nice modal to specify if its a person or a company. for now only person -->
 
-    <form onsubmit="return validateForm();" method="post" id="form">
+    <form onsubmit="return validateForm();" method="post" id="formID">
       <br>
       <center>
       <h3>Are you registering as a person or as a company?</h3>
@@ -117,7 +113,7 @@ function validateForm()
 		return false;
 	}
   var queryString = $('#formID').serialize(); 
-
+  console.log(queryString);
   var username = document.getElementById("username").value;
   jQuery.ajax({
       url: "/handleSignup.php?verify="+username,
@@ -132,7 +128,7 @@ function validateForm()
         }
         else{
           jQuery.ajax({
-          url: "/handleSignup.php?insert="+queryString,
+          url: "/handleSignup.php?insert&"+queryString,
           error: function(data){
            
           },
@@ -140,7 +136,7 @@ function validateForm()
 
             alert("Account created!!");
 
-            window.location.href = "/viewProfile.phps";
+            window.location.href = "/viewProfile.php";
             // go to my profile.
             }     
           });

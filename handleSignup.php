@@ -22,48 +22,51 @@
  		 }
 	}
 
-	// $user = $_POST['user'];
+	if(isset($_GET["insert"])){
 
-	// $name = $_POST['name'];
-	// $email = $_POST['email'];
-	// $password = $_POST['password'];
-	// $username = $_POST['username'];
-	// $income = $_POST['income'];
+		$user = $_GET['user'];
+
+		$name = $_GET['name'];
+		$email = $_GET['email'];
+		$password = $_GET['password'];
+		$username = $_GET['username'];
+		$income = $_GET['income'];
 
 
 
-	// if($user == "person"){
-	// 	$gender = $_POST['gender'];
-	// 	$birthday = $_POST['birthday'];
+		if($user == "person"){
+			$gender = $_GET['gender'];
+			$birthday = $_GET['birthday'];
 
-	// 	$signup = new Person(array(
-	// 	"username" => $username,
-	// 	"name" => $name,
-	// 	"email" => $email,
-	// 	"password" => $password,
-	// 	"income" => $income,
-	// 	"gender" => $gender,
-	// 	"bday" => $birthday));
+			$signup = new Person(array(
+			"username" => $username,
+			"name" => $name,
+			"email" => $email,
+			"password" => $password,
+			"income" => $income,
+			"gender" => $gender,
+			"bday" => $birthday));
 
-		
-	// }
-	// else
-	// {
-	// 	$poc = $_POST['poc'];
-	// 	$companyCat = $_POST['companyCat'];
-		
-	// 	$signup = new Company(array(
-	// 	"username" => $username,
-	// 	"name" => $name,
-	// 	"email" => $email,
-	// 	"password" => $password,
-	// 	"income" => $income,
-	// 	"company_cat" => $companyCat,
-	// 	"PoC" => $poc));
+			
+		}
+		else
+		{
+			$poc = $_GET['poc'];
+			$companyCat = $_GET['companyCat'];
+			
+			$signup = new Company(array(
+			"username" => $username,
+			"name" => $name,
+			"email" => $email,
+			"password" => $password,
+			"income" => $income,
+			"company_cat" => $companyCat,
+			"PoC" => $poc));
 
-	// 	echo $signup;
 
-	// }
+
+		}
+	}
 
 
 	// echo "Successfully added!";
