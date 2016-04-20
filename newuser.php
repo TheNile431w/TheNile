@@ -18,7 +18,7 @@
 
     <!-- Will add a nice modal to specify if its a person or a company. for now only person -->
 
-    <form onsubmit="return validateForm();" method="post" action="handleSignup.php">
+    <form onsubmit="return validateForm();" method="post" id="form">
       <br>
       <center>
       <h3>Are you registering as a person or as a company?</h3>
@@ -116,13 +116,39 @@ function validateForm()
 		alert("Please complete all the fields");
 		return false;
 	}
+  var queryString = $('#formID').serialize(); 
 
-  // TODO LATER, CHECK IF USERNAME EXISTS
-	// if it exists, return false ,otherwise return true so that form goes to correct signed up page.
-	return true;
+  var username = document.getElementById("username").value;
+  jQuery.ajax({
+      url: "/handleSignup.php?verify="+username,
+      error: function(data){
+       
+      },
+      success: function(data){
 
+        if(data == 1){
+          alert("Username exists");
+          return false;
+        }
+        else{
+          jQuery.ajax({
+          url: "/handleSignup.php?insert="+queryString,
+          error: function(data){
+           
+          },
+          success: function(data){
+
+            alert("Account created!!");
+
+            window.location.href = "/viewProfile.phps";
+            // go to my profile.
+            }     
+          });
+        } 
+      }
+  });
+
+
+return false;
 }
 </script>
-<?php
-
-?>
