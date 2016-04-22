@@ -1,5 +1,11 @@
 <?php include("htmlHeader.php"); ?>
-    <?php include("htmlTopbar.php"); ?>
+<?php include("htmlTopbar.php"); ?>
+
+<?php 
+
+if(!isset($_GET["id"]))
+  return;
+?>
 
 <html>
   <head>
@@ -9,7 +15,22 @@
   <body>
     <center><h1>My Profile</h1></center>
 
-    <!-- Will add a nice modal to specify if its a person or a company. for now only person -->
+    <br>
+    <br>
+
+    <h2><?php 
+
+    echo "Hello";
+
+    $username = $_GET["id"];
+
+    User::load(array("username"=> "kevincoco"));
+
+
+    ?></h2>
+
+<!-- Literally just load info like email bla bla and show her that we have a profile page. -->
+
 
     </center>
   </body>
