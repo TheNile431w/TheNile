@@ -235,6 +235,7 @@ abstract class Entity {
 	 * @return ARRAY        Array ( numerically indexed ) of result objects.
 	 */
 	public static function load($args) {
+
 		if(is_string($args)) {
 			if(!endsWith($args, ";"))
 				$endsWith .= ";";
@@ -259,6 +260,14 @@ abstract class Entity {
 
 			return $res;
 		} elseif(is_array($args)) {
+			$info = static::getStaticSQLInfo();
+			$tables = array();
+			$temp = static::getTableName();
+			while($temp != "Entity") {
+				array_unshift($tables, $temp);
+				$temp = get_parent_class($temp);
+			}
+			
 			$res = array();
 			foreach($tables as $t) {
 				$whereClause = array();
@@ -413,5 +422,6 @@ abstract class Entity {
 }
 
 ?>
+
 
 
