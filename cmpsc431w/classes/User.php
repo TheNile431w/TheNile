@@ -43,6 +43,25 @@ class User extends Entity {
 	public static function getPrimaryAttr() {
 		return "username";
 	}
+
+	public function getSubClass() {
+		$isPerson = FALSE;
+		$isCompany = FALSE;
+		if(isset($_GET['pid'])) {
+			try {
+				$user = new Person(array("username" => $this->get("username")));
+				$isPerson = TRUE;
+			} catch(Exception $e) {
+				try {
+					$user = new Company(array("username" => $this->get("username")));
+					$Company = TRUE;
+				} catch(Exception $e) { }
+			}
+		}
+		if($isPerson OR $isCompany)
+			return $user;
+		return FALSE;
+	}
 }
 
 include("Person.php");

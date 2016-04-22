@@ -110,6 +110,23 @@ class Product extends Entity {
 
 		return $arr;
 	}
+
+	public function getSubClass() {
+		$isPurchase = FALSE;
+		$isAuction = FALSE;
+		try {
+			$item = new Purchase(array("pid" => $this->get("pid")));
+			$isPurchase = TRUE;
+		} catch(Exception $e) {
+			try {
+				$item = new Auction(array("pid" => $this->get("pid")));
+				$isAuction = TRUE;
+			} catch(Exception $e) { }
+		}
+		if($isPurchase OR $isAuction)
+			return $item;
+		return FALSE;
+	}
 }
 
 include("Purchase.php");
