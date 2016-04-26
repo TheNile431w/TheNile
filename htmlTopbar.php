@@ -39,9 +39,9 @@
         </li>
       </ul>
 
-      <form class="navbar-form navbar-left" role="search">
+      <form class="navbar-form navbar-left" role="search" action="browse.php" method="GET">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+          <input type="text" class="form-control" name="search" placeholder="Search">
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
@@ -92,5 +92,6 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
 
 

@@ -238,7 +238,7 @@ abstract class Entity {
 
 		if(is_string($args)) {
 			if(!endsWith($args, ";"))
-				$endsWith .= ";";
+				$args .= ";";
 			$t = static::getTableName();
 			$db = new database();
 			$r = $db->query($args);
@@ -288,6 +288,7 @@ abstract class Entity {
 							$res[$i] = array_merge($res[$i], $tempRes);
 						else
 							$res[$i] = $tempRes;
+						$i++;
 					}
 				}
 			}
@@ -422,6 +423,7 @@ abstract class Entity {
 }
 
 ?>
+
 
 
 

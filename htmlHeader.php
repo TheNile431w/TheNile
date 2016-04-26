@@ -7,8 +7,8 @@ ini_set('display_errors', 'On');
 
 define("IMAGE_FOLDER", "images/");
 define("DEEP_BLUE", "#492DA2");
-define("LIGHT_BLUE", "#ddf");
-define("DARK_BLUE", "#006");
+define("LIGHT_BLUE", "#ddddff");
+define("DARK_BLUE", "#000066");
 
 $user = FALSE;
 $msg = FALSE;
@@ -82,7 +82,7 @@ function prodRow($items, $show = 4) {
       $products .= '
         <li class="prodli" id="'.$i->get('pid').'">
           <img src="'. IMAGE_FOLDER . str_replace("%2", "%252", $i->get("img")) .'" class="carouselImg" />
-          <h4 class="carouselText">'.$i->get("pname").'</h4>
+          <span class="carouselText"><h4 style="width:140px;background:rgb(0,0,0);background:rgba(0,0,0,0.7);">'.$i->get("pname").'</h4></span>
         </li>';
     }
   }
@@ -237,55 +237,10 @@ body {
   /* Opera 11.10+ */
   background: -o-linear-gradient(top, rgba(221, 221, 255, 0), rgba(73, 45, 161, 1), rgba(221, 221, 255, 0));
 }
-.star-rating {
-  font-size: 0;
-  white-space: nowrap;
-  display: inline-block;
-  width: 250px;
-  height: 50px;
-  overflow: hidden;
-  position: relative;
-  background: url('data:image/svg+xml;utf-8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve"><polygon fill="#DDDDDD" points="10,0 13.09,6.583 20,7.639 15,12.764 16.18,20 10,16.583 3.82,20 5,12.764 0,7.639 6.91,6.583 "/></svg>');
-  background-size: contain;
-}
-.star-rating i {
-  opacity: 0;
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 20%;
-  z-index: 1;
-  background: url('data:image/svg+xml;utf-8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve"><polygon fill="#FFDF88" points="10,0 13.09,6.583 20,7.639 15,12.764 16.18,20 10,16.583 3.82,20 5,12.764 0,7.639 6.91,6.583 "/></svg>');
-  background-size: contain;
-}
-.star-rating input {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  opacity: 0;
-  display: inline-block;
-  width: 20%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  z-index: 2;
-  position: relative;
-}
-.star-rating input:hover + i,
-.star-rating input:checked + i {
-  opacity: 1;
-}
-.star-rating i ~ i {
-  width: 40%;
-}
-.star-rating i ~ i ~ i {
-  width: 60%;
-}
-.star-rating i ~ i ~ i ~ i {
-  width: 80%;
-}
-.star-rating i ~ i ~ i ~ i ~ i {
-  width: 100%;
+
+.transBlueBack {
+  background:rgba(<?php echo(substr(DARK_BLUE, 1, 2) . ',' . substr(DARK_BLUE, 3, 2) . ',' . substr(DARK_BLUE, 5, 2) . ',.8'); ?>);
+  padding-left:10px;
 }
 
 /* CAROUSEL */
@@ -326,6 +281,9 @@ body {
 .rowContainer a.prev:hover, .rowContainer a.next:hover {
   background-color: #666666;
 }
+.carouselImg {
+  cursor:pointer;
+}
 .carouselImg + .carouselText {
   display:none;
 }
@@ -335,14 +293,12 @@ body {
 }
 .carouselText {
   color:white;
-  font:Helvetica, Sans-Serif;
-  letter-spacing:-1px;
-  background:rgb(0,0,0);
-  background:rgba(0,0,0,0.7);
+  font:Helvetica, Sans-Serif, 14pt, bold;
   padding:10px;
-  position:absolute;
-  margin-left:5px;
-  top:5px;
+  display:box;
+  position:relative;
+  left:5px;
+  top:-155px;
   width:140px;
   overflow:hidden;
 }
@@ -409,3 +365,4 @@ $(document).ready(function() {
 });
 
 </script>
+

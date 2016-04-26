@@ -46,6 +46,13 @@
             'time' => date("Y/m/d H:i:s"),
             'unitPrice' => $_POST['bid'],
             'qty' => "1"));
+    } elseif(isset($_POST['addToCart']) AND !is_null($item) AND $user != FALSE) {
+        new PurchasedBy(array(
+            'pid' => $item->get('pid'),
+            'username' => $user->get('username'),
+            'time' => date("Y/m/d H:i:s"),
+            'unitPrice' => $item->get('buy_out'),
+            'qty' => "1"));
     }
 
     if(isset($_POST['subReview']) AND !is_null($item) AND $GLOBALS['user'] != FALSE AND isset($_POST['rating']) AND is_numeric($_POST['rating']) AND $_POST['rating'] >= 1 AND $_POST['rating'] <= 5 AND isset($_POST['rating_description']) AND !empty($_POST['rating_description'])) {
@@ -84,7 +91,7 @@
     <?php
     if(!is_null($item)) {
       ?>
-      <div class="row">
+      <div class="row"><!--
         <div class="col-md-4">
           <div style="width:100%;">
             <img class="pull-right" src="<?php echo(IMAGE_FOLDER . str_replace('%2', '%252', $item->get('img'))); ?>">
@@ -100,22 +107,22 @@
           <div class="content">
             <?php echo(prettyDescription($item->get('description'))); ?>
           </div>
-        </div>
-	    <div class="col-md-4">
-	      <div style="width:100%;">
-		    <img class="pull-right" src="<?php echo(IMAGE_FOLDER . str_replace('%2', '%252', $item->get('img'))); ?>">
-		  </div>
-	    </div>
-	    <div class="col-md-8" style="background-color: <?php echo(LIGHT_BLUE); ?>; border-radius: 5px;">
-		  <h2>
-			<?php echo($item->get('pname')); ?>
-		  </h2>
+        </div>-->
+      <div class="col-md-4">
+        <div style="width:100%;">
+        <img class="pull-right" src="<?php echo(IMAGE_FOLDER . str_replace('%2', '%252', $item->get('img'))); ?>">
+      </div>
+      </div>
+      <div class="col-md-8" style="background-color: <?php echo(LIGHT_BLUE); ?>; border-radius: 5px;">
+      <h2>
+      <?php echo($item->get('pname')); ?>
+      </h2>
           <?php 
             if($isPurchase) {
               ?>
-    		  <h4>
-    		  	Price: <font style="font-weight: bold; font-size:larger;">$<?php echo($item->get("buy_out")); ?></font>
-    		  </h4>
+          <h4>
+            Price: <font style="font-weight: bold; font-size:larger;">$<?php echo($item->get("buy_out")); ?></font>
+          </h4>
               <?php
             } elseif($isAuction) {
                 try {
@@ -149,9 +156,10 @@
                 <?php
             }
           ?>
-		  <div class="content">
-			<?php echo(prettyDescription($item->get('description'))); ?>
-		  </div>
+      Sold By: <a href="viewProfile.php?id=<?php $sb = new User(array('username' => $item->get('sold_by'))); echo($sb->get('username')) ?>"><?php echo($sb->get('name')); ?></a> 
+      <div class="content">
+      <?php echo(prettyDescription($item->get('description'))); ?>
+      </div>
           <?php
           if($user != FALSE) {
             ?>
@@ -159,17 +167,20 @@
                 <div class="col-md-8">
                     <form action='product.php?pid=<?php echo($item->get('pid')); ?>' method="POST">
                         <?php
-                            if($isAuction)
-                                echo("<button type='submit' name='bid' class='btn btn-primary' value='".($cBid+1)."'>Bid $". ($cBid+1) ."</button>");
+                            if($isAuction) {
+                              echo("<button type='submit' name='bid' class='btn btn-primary' value='".($cBid+1)."'>Bid $". ($cBid+1) ."</button>");
+                              echo("<button type='submit' name='purchase' class='btn btn-primary pull-right'>Buy Now</button>");
+                            } else {
+                              echo("<button type='submit' name='addToCart' class='btn btn-primary pull-right'>Add to Cart</button>");
+                            }
                         ?>
-                        <button type='submit' name="purchase" class='btn btn-primary pull-right'>Buy Now</button>
                     </form>
                 </div>
             <?php
           }
           ?>
           </div>
-	    </div>
+      </div>
       </div><div class="row">
         <div class="col-md-8 col-md-offset-4">
           <?php
@@ -234,3 +245,5 @@
     <br /><br />
   </body>
 </HTML>
+
+

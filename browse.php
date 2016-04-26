@@ -34,6 +34,18 @@
           return $s;*/
         }
         $prods = loadFromCategory(ParentCategory::getArray($category));
+
+        if(isset($_GET['search'])) {
+        	foreach($prods as $i => $p) {
+        		if(		(strpos(strtolower($p->get('pname')), strtolower($_GET['search'])) == FALSE)
+        			AND	(strpos(strtolower($p->get('sold_by')), strtolower($_GET['search'])) == FALSE)
+        			AND	(strpos(strtolower($p->get('pid')), strtolower($_GET['search'])) == FALSE)
+        			AND	(strpos(strtolower($p->get('description')), strtolower($_GET['search'])) == FALSE)
+        		) {
+        			unset($prods[$i]);
+        		}
+        	}
+        }
 	?>
   </head>
 
@@ -80,3 +92,4 @@
 	</div>
   </body>
 </HTML>
+
