@@ -41,8 +41,27 @@
 
       <form class="navbar-form navbar-left" role="search" action="browse.php" method="GET">
         <div class="form-group">
-          <input type="text" class="form-control" name="search" placeholder="Search">
+          <input type="text" class="form-control" name="search" placeholder="Search" onfocus="displayPrice()">
         </div>
+        <script>
+          function displayPrice()
+          {
+            document.getElementById("prices").style.display="initial";
+
+          }
+        </script>
+      <div class="form-group" id="prices" style="display:none">
+        <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+        <label>Price Range:</label>
+
+        <div class="input-group">
+          <div class="input-group-addon">$</div>
+          <input type="text" class="form-control" id="min" name="min" placeholder="0.00">
+          <div class="input-group-addon">-</div>
+          <input type="text" class="form-control" id="max" name="max"placeholder="100.00">
+        </div>
+      </div>
+
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
 

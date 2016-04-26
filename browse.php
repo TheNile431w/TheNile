@@ -35,16 +35,27 @@
         }
         $prods = loadFromCategory(ParentCategory::getArray($category));
 
-        if(isset($_GET['search'])) {
-        	foreach($prods as $i => $p) {
-        		if(		(strpos(strtolower($p->get('pname')), strtolower($_GET['search'])) == FALSE)
-        			AND	(strpos(strtolower($p->get('sold_by')), strtolower($_GET['search'])) == FALSE)
-        			AND	(strpos(strtolower($p->get('pid')), strtolower($_GET['search'])) == FALSE)
-        			AND	(strpos(strtolower($p->get('description')), strtolower($_GET['search'])) == FALSE)
+        
+        foreach($prods as $i => $p) {
+        	if(isset($_GET['search']) AND !empty($_GET['search'])) {
+            if(		(strpos(strtolower($p->get('pname')), strtolower($_GET['search'])) === FALSE)
+        			AND	(strpos(strtolower($p->get('sold_by')), strtolower($_GET['search'])) === FALSE)
+        			AND	(strpos(strtolower($p->get('pid')), strtolower($_GET['search'])) === FALSE)
+        			AND	(strpos(strtolower($p->get('description')), strtolower($_GET['search'])) === FALSE)
         		) {
         			unset($prods[$i]);
         		}
         	}
+          if(isset($_GET['min']) AND !empty($_GET['min'])) {
+            if($p->get('buy_out') < (float)$_GET['min']) {
+              unset($prods[$i]);
+            }
+          }
+          if(isset($_GET['max']) AND !empty($_GET['max'])) {
+            if($p->get('buy_out') > (float)$_GET['max']) {
+              unset($prods[$i]);
+            }
+          }
         }
 	?>
   </head>
