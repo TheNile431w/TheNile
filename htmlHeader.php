@@ -59,12 +59,15 @@ function prettyDescription($s) {
   return $dom->save();
 }
 
-function productPreview($item) {
+function productPreview($item, $overlay=NULL) {
   return '
   <div class="col-xs-6 col-sm-4 col-md-3">
     <div class="thumbnail" style="background-color: '.LIGHT_BLUE.'">
       <a href="product.php?pid='.$item->get('pid').'">
-        <img src="'. IMAGE_FOLDER . str_replace("%2", "%252", $item->get("img")) .'" style="max-height:250px;border:0px;" />
+        <img src="'. IMAGE_FOLDER . str_replace("%2", "%252", $item->get("img")) .'" style="max-height:250px;border:0px;" class="productImg" />
+        '.(is_null($overlay) ? "" : '
+          <span class="productText"><h4 style="margin:5px;max-width:220px;background:rgb(0,0,0);background:rgba(0,0,0,0.7);">'.$overlay.'</h4></span>
+        ').'
       </a>
       <div class="caption">
         <h3 class="hideContent-4">'.$item->get("pname").'</h3>
@@ -240,7 +243,8 @@ body {
 
 .transBlueBack {
   background:rgba(<?php echo(substr(DARK_BLUE, 1, 2) . ',' . substr(DARK_BLUE, 3, 2) . ',' . substr(DARK_BLUE, 5, 2) . ',.8'); ?>);
-  padding-left:10px;
+  color:white;
+  border-radius: 5px;
 }
 
 /* CAROUSEL */
@@ -307,6 +311,29 @@ body {
   cursor:pointer;
 }
 
+.productImg + .productText {
+  display:none;
+}
+.productImg:hover + .productText {
+  display:inline;
+  cursor:pointer;
+}
+.productText:hover {
+  display:inline;
+  cursor:pointer;
+}
+.productText {
+  color:white;
+  font:Helvetica, Sans-Serif, 14pt, bold;
+  border:10px;
+  display:box;
+  position:absolute;
+  left:27px;
+  top:30px;
+  max-width:230px;
+  overflow:hidden;
+}
+
 
 /* STAR RATING */
 .rating {
@@ -365,4 +392,5 @@ $(document).ready(function() {
 });
 
 </script>
+
 

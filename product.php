@@ -46,6 +46,13 @@
             'time' => date("Y/m/d H:i:s"),
             'unitPrice' => $_POST['bid'],
             'qty' => "1"));
+    } elseif(isset($_POST['purchase'])) {
+        new PurchasedBy(array(
+            'pid' => $item->get('pid'),
+            'username' => $user->get('username'),
+            'time' => date("Y/m/d H:i:s"),
+            'unitPrice' => $item->get('buy_out'),
+            'qty' => "1"));
     } elseif(isset($_POST['addToCart']) AND !is_null($item) AND $user != FALSE) {
         new PurchasedBy(array(
             'pid' => $item->get('pid'),
@@ -91,29 +98,15 @@
     <?php
     if(!is_null($item)) {
       ?>
-      <div class="row"><!--
-        <div class="col-md-4">
-          <div style="width:100%;">
-            <img class="pull-right" src="<?php echo(IMAGE_FOLDER . str_replace('%2', '%252', $item->get('img'))); ?>">
-          </div>
-        </div>
-        <div class="col-md-8" style="background-color: <?php echo(LIGHT_BLUE); ?>; border-radius: 5px;">
-          <h2>
-            <?php echo($item->get('pname')); ?>
-          </h2>
-          <h4>
-            Price: <font style="font-weight: bold; font-size:larger;">$<?php echo($item->get("buy_out")); ?></font>
-          </h4>
-          <div class="content">
-            <?php echo(prettyDescription($item->get('description'))); ?>
-          </div>
-        </div>-->
-      <div class="col-md-4">
+      <div class="container transBlueBack" style="width:95%;">
+      <br />
+      <div class="row">
+      <div class="col-md-3">
         <div style="width:100%;">
-        <img class="pull-right" src="<?php echo(IMAGE_FOLDER . str_replace('%2', '%252', $item->get('img'))); ?>">
+          <img class="pull-right" src="<?php echo(IMAGE_FOLDER . str_replace('%2', '%252', $item->get('img'))); ?>" style="max-width: 275px;">
+        </div>
       </div>
-      </div>
-      <div class="col-md-8" style="background-color: <?php echo(LIGHT_BLUE); ?>; border-radius: 5px;">
+      <div class="col-md-8" style="background-color: <?php echo(LIGHT_BLUE); ?>; border-radius: 5px; color:black;">
       <h2>
       <?php echo($item->get('pname')); ?>
       </h2>
@@ -129,6 +122,7 @@
                     $arr = PurchasedBy::load("SELECT * FROM PurchasedBy WHERE pid='".$item->get('pid')."' and unitPrice=(SELECT MAX(unitPrice) FROM PurchasedBy WHERE pid='".$item->get('pid')."');");
                 } catch(Exception $e) { }
                 $cBid = 0;
+                $cUsr = FALSE;
                 if(empty($arr)) {
                     echo("<div class='row'>
                             <div class='col-md-8'>
@@ -141,6 +135,7 @@
                         </div>');
                 } else {
                     $cBid = $arr[0]->get('unitPrice');
+                    $cUsr = $arr[0]->get('username');
                     echo("<div class='row'>
                             <div class='col-md-8'>
                                 <span>
@@ -156,7 +151,7 @@
                 <?php
             }
           ?>
-      Sold By: <a href="viewProfile.php?id=<?php $sb = new User(array('username' => $item->get('sold_by'))); echo($sb->get('username')) ?>"><?php echo($sb->get('name')); ?></a> 
+      Sold By: <a href="viewProfile.php?id=<?php $sb = new User(array('username' => $item->get('sold_by'))); echo($sb->get('username')) ?>"><?php echo($sb->get('name')); ?></a>
       <div class="content">
       <?php echo(prettyDescription($item->get('description'))); ?>
       </div>
@@ -168,7 +163,10 @@
                     <form action='product.php?pid=<?php echo($item->get('pid')); ?>' method="POST">
                         <?php
                             if($isAuction) {
-                              echo("<button type='submit' name='bid' class='btn btn-primary' value='".($cBid+1)."'>Bid $". ($cBid+1) ."</button>");
+                              echo((($cUsr === $user->get('username')) ?
+                                    "<button name='bid' class='btn btn-primary' disabled='true' value='".($cBid+1)."'>Bid $". ($cBid+1) ."</button>"
+                                    :
+                                    "<button type='submit' name='bid' class='btn btn-primary' value='".($cBid+1)."'>Bid $". ($cBid+1) ."</button>"));
                               echo("<button type='submit' name='purchase' class='btn btn-primary pull-right'>Buy Now</button>");
                             } else {
                               echo("<button type='submit' name='addToCart' class='btn btn-primary pull-right'>Add to Cart</button>");
@@ -182,23 +180,44 @@
           </div>
       </div>
       </div><div class="row">
-        <div class="col-md-8 col-md-offset-4">
+        <div class="col-md-8 col-md-offset-3">
           <?php
-            foreach($item->getRatings() as $r) {
-                echo("<br /><div style='background-color:white;' class='row'>
-                        <div class='col-xs-3'>
+            if(count($item->getRatings()) > 0) {
+                $sum = 0;
+                $count = 0;
+                foreach($item->getRatings() as $r) {
+                  $sum += $r->get('rating');
+                  $count++;
+                }
+                echo("<h3>Average Rating: " . sprintf("%.1f", $sum/$count). "</h3>");
+              echo("<table class='table' style='color:white;border:2px solid #ddd;border-radius: 5px;'>
+                      <tr>
+                        <th>
+                          User
+                        </th><th>
+                          Rating
+                        </th><th>
+                          Description
+                        </th>
+                      </tr>");
+              foreach($item->getRatings() as $r) {
+                echo("<tr>
+                        <td>
                           " . $r->get('username') . "
-                        </div><div class='col-xs-2'>
+                        </td><td>
                           " . $r->get('rating') . "
-                        </div><div class='col-xs-7'>
+                        </td><td>
                           " . $r->get('description') . "
-                        </div>
-                      </div>");
+                        </td>
+                      </tr>");
+              }
+              echo("</table>");
             }
+            
             if($GLOBALS['user'] != FALSE) {
               ?>
               <br />
-              <div style='background-color:white;' id='newRating'>
+              <div id='newRating'>
                 <form action="product.php?pid=<?php echo($item->get('pid')); ?>" method="POST" onsubmit="return verify();">
                   <div class='row'>
                     <div class='col-xs-6 col-md-2'>
@@ -239,11 +258,13 @@
           ?>
         </div>
       </div>
+      </div>
       <?php
     }
     ?>
     <br /><br />
   </body>
 </HTML>
+
 
 

@@ -27,6 +27,8 @@ class Acquired extends Entity {
 		$attrs[$table]['card_id']['type'] = "VARCHAR(16)";
 		$attrs[$table]['addr_id']['type'] = "KEY";
 
+		$attrs[$table]['acq_id']['restrictions'] = "AUTO_INCREMENT";
+
 		$attrs[$table]['FOREIGN']['keys'] = array(
 			'card_id',
 			'addr_id');

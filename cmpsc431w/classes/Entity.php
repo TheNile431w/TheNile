@@ -65,6 +65,7 @@ abstract class Entity {
 						$this->setAttrs($res);
 					} elseif($r->num_rows == 0) {
 						if(!is_null($newProv) AND $newProv == FALSE) {
+							var_dump(debug_backtrace());
 							throw new Exception("Entity not found");
 						}
 						$newProv = TRUE;
@@ -75,8 +76,10 @@ abstract class Entity {
 			} else {
 				if(is_null($newProv))
 					$newProv = TRUE;
-				elseif($newProv == FALSE)
+				elseif($newProv == FALSE) {
+					var_dump(debug_backtrace());
 					throw new Exception("Not all primary attributes given");
+				}
 			}
 		}
 
@@ -185,6 +188,7 @@ abstract class Entity {
 
 	public function save() {
 		$query = array();
+		var_dump($this);
 		if($this->getID() == false) {
 			// New Entry
 			foreach($this->attrs as $table => $t) {
@@ -273,8 +277,13 @@ abstract class Entity {
 				$whereClause = array();
 				foreach($args as $a => $v) {
 					$a = trim($a);
-					if(isset($info[$t][$a]))
-						$whereClause[] = $a . "='" . $v . "'";
+					if(isset($info[$t][$a])) {
+						if(strtoupper($v) == "NULL") {
+							$whereClause[] = $a . " IS NULL";
+						} else {
+							$whereClause[] = $a . "='" . $v . "'";
+						}
+					}
 				}
 				$db = new database();
 				$r = $db->query("SELECT * FROM " . $t . " WHERE " . implode(" AND ", $whereClause) . ";");
@@ -423,6 +432,7 @@ abstract class Entity {
 }
 
 ?>
+
 
 
 

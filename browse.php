@@ -75,7 +75,7 @@
       </div>
     </div>
 	<hr style="width:90%;" />
-    <div class="row">
+    <div class="row" style="width:99%;">
       <div class="col-md-3 col-lg-2">
       	<ol class="breadcrumb">
 			<?php
@@ -89,10 +89,12 @@
 			?>
 		</ol>
       </div>
-      <div class="col-md-9 col-lg-10">
+      <div class="col-md-9 col-lg-10 transBlueBack">
       	<div class="row">
+      		<br />
 			<?php
-			foreach($prods as $i => $p) {
+			$i = 0;
+			foreach($prods as $p) {
 				if(($i++ != 0) AND ($i % 4 == 1))
 					echo("</div><div class='row'>");
 				echo(productPreview($p));
@@ -103,4 +105,5 @@
 	</div>
   </body>
 </HTML>
+
 

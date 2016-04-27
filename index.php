@@ -23,16 +23,18 @@
     </div>
     <hr style="width:90%;" />
     <div class="row">
-      <div class="col-md-3 col-lg-2">
-        <h2>
-          Featured Products
-        </h2>
-      </div>
-      <div class="col-md-9 col-lg-10">
-        <div class="container" style="width:100%;">
+      <div class="col-xs-12">
+        <div class="container transBlueBack" style="width:98%;margin-left:auto;margin-right:auto;">
           <div class="row">
+            <div class="col-xs-11 col-xs-offset-1">
+              <h2><u>
+                Featured Products
+              </u></h2>
+            </div>
+          </div>
+          <div class="row"><br />
             <?php
-            foreach(Purchase::getRandom(12) as $i => $item) {
+            foreach(Product::getRandom(12) as $i => $item) {
               if($i != 0 AND $i % 4 == 0)
                 echo('</div><div class="row">');
               echo(productPreview($item));
@@ -40,12 +42,7 @@
             }
             ?>
           </div>
-          <br /><br /><br />
-          <div class="row">
-            <?php
-              echo(prodRow(Purchase::getRandom(12)));
-            ?>
-          </div>
+          <br />
         </div>
       </div>
     </div>
