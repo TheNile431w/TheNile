@@ -429,6 +429,10 @@
                             <th>
                                 Purchase Date
                             </th><th>
+                                Ship To:
+                            </th><th>
+                                Credit Card:
+                            </th><th>
                                 Item
                             </th><th>
                                 Price
@@ -444,9 +448,16 @@
                                 $array[$p->get('acq_id')]= array($p);
                         }
                         foreach($array as $a) {
+                            $acq = new Acquired(array('acq_id'=>$a[0]->get('acq_id')), FALSE);
+                            $addr = new Address(array('addr_id'=>$acq->get('addr_id')),FALSE);
+                            $card = new Creditcard(array('cardNum'=>$acq->get('card_id')),FALSE);
                             echo("<tr>
                                     <td rowspan=".count($a).">
                                         ".date("d/m/Y, h:i:s", strtotime($a[0]->get('time')))."
+                                    </td><td rowspan=".count($a).">
+                                        ".$addr->get('description')."
+                                    </td><td rowspan=".count($a).">
+                                        ".$card->get('cardName')."
                                     </td>");
                             foreach($a as $i=>$v) {
                                 $p = new Product(array('pid'=>$v->get('pid')), FALSE);
