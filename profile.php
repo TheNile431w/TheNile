@@ -320,13 +320,14 @@
                         foreach($bids as $i) {
                             $item = new Product(array("pid" => $i->get('pid')), FALSE);
                             $item = $item->getSubClass();
-                            $arr = PurchasedBy::load("SELECT * FROM PurchasedBy WHERE pid='".$item->get('pid')."' and unitPrice=(SELECT MAX(unitPrice) FROM PurchasedBy WHERE pid='".$item->get('pid')."');");
-                            $cBid = $arr[0]->get('unitPrice');
-                            echo("<form action='product.php?pid=".$i->get('pid')."' method='GET'>
+                            $arr = PurchasedBy::load(array("pid"=>$i->get('pid'), "username"=>$uname));
+    
+                            $cBid = $arr[count($arr)-1]->get('unitPrice');
+                            echo("<form action='product.php?pid=".$item->get('pid')."' method='POST'>
                                 <tr>
                                     <td>
-                                        <a href='product.php?pid=".$i->get('pid')."'>
-                                            ". $i->get('pname') ."
+                                        <a href='product.php?pid=".$item->get('pid')."'>
+                                            ". $item->get('pname') ."
                                         </a>
                                     </td><td>
                                         ". (($arr[0]->get('username') == $uname) ?
@@ -374,12 +375,15 @@
                         $total = 0;
                         foreach($cart as $i) {
                             $record = PurchasedBy::load(array("pid"=>$i->get('pid'), "username"=>$uname))[0];
-                            $total += $record->get('unitPrice');
+                            $arr = PurchasedBy::load(array("pid"=>$i->get('pid'), "username"=>$uname));
+    
+                            $cBid = $arr[count($arr)-1]->get('unitPrice');
+                            $total += $cBid;
                             echo("<tr>
                                     <td>
                                         <a href='product.php?pid=".$i->get('pid')."'>". $i->get('pname') ."</a>
                                     </td><td>
-                                        ". $i->get('buy_out') ."
+                                        ". $cBid ."
                                     </td><td>
                                         ". $record->get('qty') ."
                                     </td><td>
