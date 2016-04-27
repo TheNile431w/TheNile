@@ -22,6 +22,23 @@
  		 }
 	}
 
+	if(isset($_GET["verifyRate"])){
+
+		$username = $_GET["verifyRate"];
+		 $db = new database();
+
+ 		 $r = $db->query('SELECT * FROM UserRating WHERE rater="'.$username.'"');
+
+ 		 // check if exists
+ 		 if($r->num_rows == 1) {
+ 		 	echo 1;
+ 		 }
+ 		 else
+ 		 {
+ 		 	echo 0;
+ 		 }
+	}
+
 	if(isset($_GET["insert"])){
 
 		$user = $_GET['user'];
@@ -68,6 +85,20 @@
 		}
 	}
 
+	if(isset($_GET["rate"])){
+		$rater = $_GET['rate'];
+
+		$ratee = $_GET['ratee'];
+		$rating = $_GET['rating'];
+		$description = $_GET['description'];
+
+        $n = new UserRating(array(
+                'rater' => $rater,
+                'ratee' => $ratee,
+                'rating' =>$rating,
+                'description' => $description));
+
+	}
 
 	// echo "Successfully added!";
 
